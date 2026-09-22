@@ -1,0 +1,141 @@
+/* ============================================================
+   Kitchen Corner - Privacy Policy / Terms & Conditions
+   ============================================================ */
+
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.ga-legal {
+  border-bottom: 1px solid #0000001f;
+  background-color: #6dbc4750;
+}
+.ga-legal-inner {
+  flex-direction: column;
+  gap: 30px 0;
+  padding-block: 125px 25px;
+  padding-inline: var(--ga-gutter);
+}
+.ga-legal-inner > * {
+  min-width: 0;
+}
+@media (min-width: 768px) {
+  .ga-legal-inner {
+    max-width: min(100%, 1460px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-legal-inner {
+    max-width: min(100%, 767px);
+  }
+
+}
+
+.ga-legal-title {
+  margin: 50px 0;
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #215836;
+}
+.ga-legal-date {
+  font-family: var(--ga-font);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: #000000;
+}
+.ga-legal-lead {
+  width: 100%;
+  max-width: 100%;
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  color: #292929;
+}
+.ga-legal-lead p {
+  margin-block-end: 0;
+}
+.ga-legal-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 10px 0;
+  padding: 0;
+}
+.ga-legal-block > * {
+  min-width: 0;
+}
+.ga-legal-h {
+  font-family: var(--ga-font);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #000000;
+}
+.ga-legal-body {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1em;
+  color: #292929;
+}
+.ga-legal-body.ga-lh-14 {
+  line-height: 1.4em;
+}
+.ga-legal-body p {
+  margin-block-end: 0;
+}
+.ga-legal-body ul,
+.ga-legal-lead ul {
+  list-style: disc outside;
+  margin: 1em 0;
+  padding: 0 0 0 20px;
+}
+.ga-legal-body li,
+.ga-legal-lead li {
+  margin: 0;
+  padding: 0;
+}
+.ga-legal-body li > p,
+.ga-legal-lead li > p {
+  margin-block-end: 0;
+}
+.ga-legal-body a,
+.ga-legal-lead a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  .ga-legal-title {
+    margin: 25px 0;
+    font-size: 28px;
+  }
+  .ga-legal-lead {
+    font-size: 16px;
+  }
+  .ga-legal-body {
+    font-size: 16px;
+    line-height: 1.4em;
+  }
+  .ga-legal-body.ga-lh-12-m {
+    line-height: 1.2em;
+  }
+}

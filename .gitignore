@@ -1,0 +1,21 @@
+# Reference-only copies of the original WordPress page sources — not deployed.
+sourcecode/
+
+# OS / editor cruft
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*.swp
+*~
+.vscode/
+.idea/
+
+# Local tooling
+node_modules/
+.cache/
+*.log

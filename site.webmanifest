@@ -1,0 +1,27 @@
+{
+  "name": "Kitchen Corner",
+  "short_name": "Kitchen Corner",
+  "description": "Kitchen Corner is the official home of My Kitchen Corner, a brand known for real, honest kitchen essentials.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#215836",
+  "icons": [
+    {
+      "src": "/assets/media/2025/11/cropped-Frame-1171275894-2-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/media/2025/11/cropped-Frame-1171275894-2-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/media/2025/11/cropped-Frame-1171275894-2-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ]
+}

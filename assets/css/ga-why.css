@@ -1,0 +1,480 @@
+/* ============================================================
+   Kitchen Corner - Why Choose Us page
+   ============================================================ */
+
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 0;
+  padding-inline: var(--ga-gutter);
+}
+@media (max-width: 1024px) {
+  .ga-sec-inner {
+    max-width: min(100%, 1024px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-sec-inner {
+    max-width: min(100%, 767px);
+    flex-wrap: wrap;
+  }
+}
+.ga-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-col > *,
+.ga-row > * {
+  min-width: 0;
+}
+.ga-row {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-figure {
+  position: relative;
+}
+.ga-rte p {
+  margin-block-end: 0;
+}
+.ga-pill {
+  align-self: flex-start;
+  padding: 8px 35px;
+  border-radius: 150px;
+  box-shadow: 4px 3px 21px 0px rgba(0, 0, 0, 0.09);
+  text-align: center;
+  background-color: #6dbc47;
+}
+.ga-pill h4 {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.2;
+}
+.ga-step-title h2 {
+  font-family: var(--ga-font);
+  font-size: 48px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  color: #215836;
+}
+.ga-step-text {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #323232;
+}
+@media (max-width: 767px) {
+  .ga-pill h4 {
+    font-size: 16px;
+  }
+  .ga-step-title h2 {
+    font-size: 28px;
+  }
+  .ga-step-text {
+    font-size: 16px;
+  }
+}
+
+/* ---------- 1. intro ---------- */
+.ga-why-intro {
+  background-color: #89ba5f1f;
+}
+.ga-why-intro-inner {
+  flex-direction: row;
+  gap: 0;
+  padding-block: 200px 0;
+}
+.ga-why-intro-left {
+  padding: 10px 0;
+}
+.ga-why-kicker {
+  align-self: flex-start;
+  background-color: #6dbc4700;
+  padding: 0;
+  border-radius: 150px;
+  text-align: start;
+}
+.ga-why-kicker h4 {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #215836;
+}
+.ga-why-title {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 30px 0;
+  padding: 0;
+  text-align: start;
+}
+.ga-why-title :is(h1, h2) {
+  font-family: var(--ga-font);
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.2em;
+  color: #215836;
+}
+.ga-why-intro-right {
+  justify-content: center;
+  padding: 10px 0;
+}
+.ga-why-intro-text {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #323232;
+}
+.ga-why-jar-deco {
+  position: absolute;
+  bottom: -250px;
+}
+@media (min-width: 768px) {
+  .ga-why-intro-left,
+  .ga-why-intro-right {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-why-intro-inner {
+    padding-block: 120px 150px;
+  }
+  .ga-why-title :is(h1, h2) {
+    font-size: 30px;
+  }
+  .ga-why-intro-text {
+    font-size: 16px;
+  }
+  .ga-why-jar-deco {
+    width: 82px;
+    max-width: 82px;
+    bottom: -120px;
+    right: 50%;
+  }
+}
+
+/* ---------- 2. the process ---------- */
+.ga-why-process {
+  background-color: #89ba5f1f;
+}
+.ga-why-process-inner {
+  flex-direction: column;
+  gap: 90px 0;
+  padding-block: 100px 50px;
+}
+.ga-why-process-inner > * {
+  min-width: 0;
+}
+.ga-step {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-step > * {
+  min-width: 0;
+}
+.ga-step-1-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 20px 0;
+  margin: 0;
+  padding: 0;
+}
+.ga-step-media {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-step-media .ga-shot {
+  z-index: 1;
+  text-align: start;
+}
+.ga-step-media .ga-shot img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+.ga-arrow-deco {
+  position: absolute;
+  z-index: 0;
+  transform: translate(50%, 50%);
+}
+.ga-arrow-deco img {
+  width: 100%;
+}
+.ga-arrow-a {
+  width: 100%;
+  max-width: 100%;
+  bottom: -50px;
+  left: 25%;
+}
+.ga-arrow-b {
+  width: 36%;
+  max-width: 36%;
+  right: 50%;
+  bottom: 0;
+}
+.ga-arrow-c {
+  width: 36%;
+  max-width: 36%;
+  right: 50%;
+  bottom: -66px;
+}
+.ga-step-copy {
+  justify-content: center;
+}
+.ga-step-video {
+  justify-content: center;
+}
+.ga-step-video .ga-video-box {
+  border-radius: 40px;
+  overflow: hidden;
+  line-height: 0;
+}
+.ga-step-video video {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+.ga-step-shot {
+  justify-content: center;
+}
+.ga-step-shot .ga-shot {
+  z-index: 1;
+  text-align: start;
+}
+.ga-step-shot .ga-shot img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+@media (min-width: 768px) {
+  .ga-step-media {
+    width: 66%;
+  }
+  .ga-step-video,
+  .ga-step-shot {
+    width: 66%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-why-process-inner {
+    gap: 30px;
+    padding-block: 0;
+  }
+  .ga-step {
+    flex-wrap: wrap;
+  }
+  .ga-step-2,
+  .ga-step-4 {
+    flex-direction: column-reverse;
+  }
+  .ga-step-media .ga-shot {
+    width: 100%;
+    max-width: 100%;
+  }
+  .ga-step-media .ga-shot img,
+  .ga-step-shot .ga-shot img {
+    height: 300px;
+    border-radius: 20px;
+  }
+  .ga-step-video .ga-video-box {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px;
+  }
+}
+
+/* ---------- 3. why this process works ---------- */
+.ga-why-works {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  border-radius: 50px;
+  margin: 150px 0 35px;
+  padding: 10px 100px 5px 70px;
+  background-color: #0b8442f5;
+}
+.ga-why-works > * {
+  min-width: 0;
+}
+.ga-why-works::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../media/2025/09/svgviewer-output-13.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: inherit;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.ga-why-works-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 50px 0;
+}
+.ga-why-works-copy > * {
+  min-width: 0;
+}
+.ga-why-works-copy h2 {
+  font-family: var(--ga-font);
+  font-size: 48px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.ga-why-works-copy .ga-rte {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+}
+.ga-why-works-copy .ga-rte-wide {
+  width: 100%;
+  max-width: 100%;
+}
+.ga-why-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  padding: 10px;
+}
+.ga-why-list > * {
+  min-width: 0;
+}
+.ga-why-list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+.ga-why-list-item > * {
+  min-width: 0;
+}
+.ga-why-list-item .ga-figure {
+  text-align: start;
+}
+.ga-why-list-item .ga-rte {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+.ga-why-works-jar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-why-works-jar .ga-figure {
+  margin: -133px 0 0 0;
+  text-align: start;
+  transform: rotate(-11.1deg);
+}
+.ga-why-works-jar img {
+  width: 310px;
+  height: 581px;
+}
+@media (min-width: 768px) {
+  .ga-why-works-copy {
+    width: 60%;
+  }
+  .ga-why-works-jar {
+    width: 40%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-why-works {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0;
+    border-radius: 15px;
+    padding: 60px 15px 15px;
+  }
+  .ga-why-works-copy {
+    padding: 0;
+  }
+  .ga-why-works-copy h2 {
+    font-size: 26px;
+  }
+  .ga-why-works-copy .ga-rte {
+    font-size: 16px;
+  }
+  .ga-why-list-item .ga-rte {
+    font-size: 18px;
+  }
+  .ga-why-works-jar .ga-figure {
+    margin: 0;
+    text-align: center;
+  }
+  .ga-why-works-jar img {
+    width: 149px;
+    height: 100%;
+    margin-inline: auto;
+  }
+}

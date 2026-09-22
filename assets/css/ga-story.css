@@ -1,0 +1,754 @@
+/* ============================================================
+   Kitchen Corner - Our Founder Story page
+   ============================================================ */
+
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 0;
+  padding-inline: var(--ga-gutter);
+}
+@media (max-width: 1024px) {
+  .ga-sec-inner {
+    max-width: min(100%, 1024px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-sec-inner {
+    max-width: min(100%, 767px);
+    flex-wrap: wrap;
+  }
+  .ga-story-forty-inner {
+    flex-wrap: wrap-reverse;
+  }
+}
+.ga-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 0;
+  gap: 20px;
+}
+.ga-figure,
+.ga-rte,
+.ga-story-card,
+.ga-story-spiral,
+.ga-story-trust-head,
+.ga-story-carousel-wrap,
+.ga-story-quotes {
+  position: relative;
+}
+.ga-rte p {
+  margin-block-end: 1.6em;
+}
+.ga-rte p:last-child {
+  margin-block-end: 1.6em;
+}
+.ga-col > * {
+  min-width: 0;
+}
+.ga-rte {
+  font-family: var(--ga-font);
+}
+
+/* ---------- 1. hero ---------- */
+.ga-story-hero-inner {
+  flex-direction: row;
+  gap: 20px;
+  padding-block: 150px 20px;
+}
+.ga-story-hero {
+  background-image: linear-gradient(180deg, #6dbc4726 0%, #6dbc4752 100%);
+}
+.ga-story-hero-copy {
+  justify-content: center;
+}
+.ga-story-hero-copy :is(h1, h2) {
+  font-family: var(--ga-font);
+  font-size: 50px;
+  font-weight: 600;
+  color: #215836;
+}
+.ga-story-quote {
+  font-family: var(--ga-font);
+  font-size: 24px;
+  font-weight: 600;
+  font-style: italic;
+  color: #222222;
+}
+.ga-story-lead {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #323232;
+}
+.ga-story-arrow1 {
+  padding: 0 0 0 50px;
+  text-align: start;
+}
+.ga-story-arrow1 img {
+  width: 11%;
+}
+.ga-story-hero-media {
+  justify-content: center;
+}
+.ga-story-hero-media img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+@media (min-width: 768px) {
+  .ga-story-hero-media {
+    width: 41%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-story-hero-copy :is(h1, h2) {
+    font-size: 34px;
+  }
+  .ga-story-quote {
+    font-size: 18px;
+    line-height: 1.3em;
+  }
+  .ga-story-lead {
+    font-size: 18px;
+  }
+  .ga-story-arrow1 {
+    width: 100%;
+    max-width: 100%;
+    margin: -23px 0 -82px 0;
+    z-index: 1;
+  }
+  .ga-story-arrow1 img {
+    width: 41%;
+    height: 109px;
+    object-fit: contain;
+  }
+  .ga-story-hero-media img {
+    border-radius: 20px;
+  }
+}
+
+/* ---------- 2. backpack ---------- */
+.ga-story-backpack {
+  background-image: linear-gradient(180deg, #6dbc4752 0%, #6dbc4763 100%);
+}
+.ga-story-backpack-inner {
+  flex-direction: column;
+  gap: 30px;
+  padding-block: 80px;
+}
+.ga-story-backpack-inner > * {
+  min-width: 0;
+}
+.ga-story-kicker {
+  font-family: var(--ga-font);
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  color: #222222;
+}
+.ga-story-body-22 {
+  font-family: var(--ga-font);
+  font-size: 22px;
+  font-weight: 400;
+  color: #323232;
+}
+@media (max-width: 767px) {
+  .ga-story-backpack-inner {
+    gap: 30px;
+    padding-block: 10px;
+  }
+  .ga-story-kicker {
+    font-size: 18px;
+    line-height: 1.3em;
+  }
+  .ga-story-body-22 {
+    font-size: 18px;
+  }
+}
+
+/* ---------- 3. forty stores ---------- */
+.ga-story-forty {
+  background-image: linear-gradient(180deg, #6dbc4763 0%, #6dbc4763 100%);
+}
+.ga-story-forty-inner {
+  flex-direction: row-reverse;
+  gap: 20px;
+  padding-block: 30px 20px;
+}
+.ga-story-forty-copy {
+  justify-content: center;
+}
+.ga-story-arrow2 {
+  position: absolute;
+  width: 10%;
+  max-width: 10%;
+  top: -16%;
+  left: -9%;
+  transform: rotate(-68deg) scaleX(-1);
+}
+.ga-story-body-20 {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #323232;
+}
+.ga-story-forty-media {
+  justify-content: center;
+}
+.ga-story-forty-media .ga-figure {
+  width: 100%;
+  max-width: 100%;
+  text-align: start;
+}
+.ga-story-forty-media img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+@media (min-width: 768px) {
+  .ga-story-forty-media {
+    width: 59%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-story-forty-inner {
+    flex-wrap: wrap-reverse;
+  }
+  .ga-story-arrow2 {
+    transform: rotate(360deg) scaleX(-1);
+  }
+  .ga-story-arrow2 img {
+    width: 69%;
+  }
+  .ga-story-body-20 {
+    font-size: 18px;
+  }
+  .ga-story-forty-media img {
+    border-radius: 20px;
+  }
+}
+
+/* ---------- 4. home experiments ---------- */
+.ga-story-home {
+  padding: 0;
+  background-image: linear-gradient(180deg, #6dbc4763 0%, #6dbc4763 100%);
+}
+.ga-story-home-inner {
+  flex-direction: row;
+  gap: 20px;
+  padding-block: 10px;
+}
+.ga-story-home-col {
+  justify-content: center;
+}
+.ga-story-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+  border-radius: 20px;
+  padding: 60px 50px 50px;
+  background-color: #72b539;
+}
+.ga-story-card > * {
+  min-width: 0;
+}
+.ga-story-ig {
+  position: absolute;
+  top: -20%;
+  right: 50%;
+  transform: translateX(50%);
+  text-align: center;
+}
+.ga-story-ig .ga-icon {
+  display: inline-block;
+  font-size: 43px;
+  line-height: 1;
+  padding: 15px;
+  color: #72b539;
+  border: 3px solid #72b539;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+.ga-story-ig .ga-icon svg {
+  display: inline-block;
+  height: 43px;
+  width: 43px;
+  fill: #72b539;
+}
+.ga-story-card h2 {
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 30px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.ga-story-card p {
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.ga-story-spiral {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 150px 0 0;
+}
+.ga-story-home-media {
+  justify-content: flex-start;
+}
+.ga-story-home-media img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+@media (min-width: 768px) {
+  .ga-story-spiral {
+    width: 34%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-story-home-inner {
+    flex-wrap: wrap;
+    margin: 0;
+    padding-block: 100px 0;
+  }
+  .ga-story-card {
+    padding: 50px 15px;
+  }
+  .ga-story-ig {
+    top: -10%;
+  }
+  .ga-story-ig .ga-icon {
+    font-size: 30px;
+  }
+  .ga-story-ig .ga-icon svg {
+    height: 30px;
+    width: 30px;
+  }
+  .ga-story-card h2 {
+    font-size: 26px;
+  }
+  .ga-story-card p {
+    font-size: 18px;
+  }
+  .ga-story-spiral {
+    padding: 0 0 50px;
+  }
+  .ga-story-spiral .ga-figure {
+    width: 270px;
+    max-width: 270px;
+    margin: 0 0 -87px 0;
+    transform: rotate(335deg);
+    z-index: 1;
+  }
+  .ga-story-spiral img {
+    width: 39%;
+  }
+  .ga-story-home-media img {
+    border-radius: 20px;
+  }
+}
+
+/* ---------- 5. one purpose ---------- */
+.ga-story-purpose {
+  background-color: #6dbc4763;
+}
+.ga-story-purpose-inner {
+  flex-direction: column;
+  gap: 15px;
+  padding-block: 50px;
+}
+.ga-story-purpose-inner > * {
+  min-width: 0;
+}
+.ga-story-star {
+  text-align: center;
+}
+.ga-story-star img {
+  margin-inline: auto;
+}
+.ga-story-purpose-inner h2 {
+  text-align: center;
+  font-family: var(--ga-font);
+  font-weight: 600;
+  color: #222222;
+}
+.ga-story-purpose-inner .ga-story-purpose-text {
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1em;
+  color: #505050;
+}
+@media (max-width: 767px) {
+  .ga-story-purpose-inner {
+    gap: 10px;
+    padding-block: 50px;
+  }
+  .ga-story-star {
+    width: 100%;
+    max-width: 100%;
+  }
+  .ga-story-star img {
+    width: 13%;
+  }
+  .ga-story-purpose-inner .ga-story-purpose-text {
+    font-size: 18px;
+    line-height: 1.3em;
+  }
+}
+
+/* ---------- 6. four years ---------- */
+.ga-story-grind {
+  background-image: linear-gradient(180deg, #6dbc4763 0%, #6dbc472e 100%);
+}
+.ga-story-grind-inner {
+  flex-direction: row;
+  gap: 50px;
+  padding-block: 100px 50px;
+}
+.ga-story-grind-media {
+  justify-content: center;
+}
+.ga-story-grind-media .ga-figure {
+  text-align: start;
+}
+.ga-story-grind-media img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+.ga-story-arrow3 {
+  position: absolute;
+  right: 55%;
+  bottom: -14%;
+}
+.ga-story-arrow3-m {
+  position: absolute;
+  right: 55%;
+  bottom: -14%;
+  transform: scaleX(-1);
+}
+.ga-story-grind-copy {
+  justify-content: center;
+}
+.ga-story-grind-copy h2 {
+  font-family: var(--ga-font);
+  font-size: 48px;
+  font-weight: 600;
+  font-style: italic;
+  color: #215836;
+}
+.ga-story-sub-24 {
+  font-family: var(--ga-font);
+  font-size: 24px;
+  font-weight: 500;
+  font-style: italic;
+  color: #222222;
+}
+@media (min-width: 768px) {
+  .ga-story-grind-media {
+    width: 66%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-story-grind-inner {
+    gap: 30px;
+    padding: 0;
+  }
+  .ga-story-grind-media img {
+    border-radius: 20px;
+  }
+  .ga-story-arrow3 {
+    margin: 0;
+    bottom: -11%;
+  }
+  .ga-story-arrow3 img {
+    width: 69%;
+  }
+  .ga-story-arrow3-m {
+    margin: 0;
+    right: 28%;
+    bottom: -7%;
+  }
+  .ga-story-arrow3-m img {
+    width: 69%;
+  }
+  .ga-story-grind-copy h2 {
+    font-size: 34px;
+  }
+  .ga-story-sub-24 {
+    font-size: 18px;
+    line-height: 1.3em;
+  }
+}
+
+/* ---------- 7. 2025 birth ---------- */
+.ga-story-birth {
+  background-image: linear-gradient(180deg, #6dbc472e 0%, #6dbc4700 100%);
+}
+.ga-story-birth-inner {
+  flex-direction: row;
+  gap: 20px;
+  padding-block: 100px 150px;
+}
+.ga-story-birth-copy {
+  justify-content: flex-start;
+}
+.ga-story-year {
+  align-self: flex-start;
+  background-color: #222222;
+  padding: 8px 35px;
+  border-radius: 150px;
+  text-align: center;
+}
+.ga-story-year h2 {
+  font-family: var(--ga-font);
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffffff;
+}
+.ga-story-birth-title {
+  width: 100%;
+  max-width: 100%;
+}
+.ga-story-birth-title h2 {
+  font-family: var(--ga-font);
+  font-size: 48px;
+  font-weight: 600;
+  color: #215836;
+}
+.ga-story-birth-strip {
+  margin: 35px 0 0;
+}
+.ga-story-birth-strip img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 20px;
+}
+.ga-story-birth-media {
+  justify-content: center;
+}
+.ga-story-birth-media img {
+  width: 100%;
+  height: 800px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 40px;
+}
+@media (max-width: 767px) {
+  .ga-story-birth-inner {
+    padding-block: 80px 100px;
+  }
+  .ga-story-year h2 {
+    font-size: 20px;
+  }
+  .ga-story-birth-title h2 {
+    font-size: 36px;
+  }
+  .ga-story-birth-strip {
+    margin: 0;
+  }
+  .ga-story-birth-strip img {
+    height: 208px;
+  }
+  .ga-story-birth-media img {
+    border-radius: 20px;
+  }
+}
+
+/* ---------- 8. our trust ---------- */
+.ga-story-trust {
+  background-image: linear-gradient(180deg, #72b539 0%, #72b53957 100%);
+}
+.ga-shape-top {
+  direction: ltr;
+  left: 0;
+  line-height: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  top: -1px;
+}
+.ga-shape-top svg {
+  display: block;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+  width: calc(100% + 1.3px);
+  height: 60px;
+}
+.ga-shape-top .ga-shape-fill {
+  fill: #e4ecdc;
+  transform: rotateY(0deg);
+  transform-origin: center;
+}
+.ga-story-trust-inner {
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 100px 0;
+}
+.ga-story-trust-inner > * {
+  min-width: 0;
+}
+.ga-story-trust-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-story-trust-head > * {
+  min-width: 0;
+}
+.ga-story-pill {
+  align-self: center;
+  background-color: #ffffff;
+  padding: 8px 35px;
+  border-radius: 150px;
+  box-shadow: 4px 3px 21px 0px rgba(0, 0, 0, 0.09);
+  text-align: center;
+}
+.ga-story-pill h2 {
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #72b539;
+}
+.ga-story-trust-title {
+  width: 41%;
+  max-width: 41%;
+  text-align: center;
+}
+.ga-story-trust-title h2 {
+  font-family: var(--ga-font);
+  font-size: 48px;
+  font-weight: 600;
+  color: #ffffff;
+}
+.ga-story-carousel-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-story-arrow4 {
+  position: absolute;
+  left: 15%;
+  bottom: -15%;
+}
+.ga-story-quotes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 10px;
+  margin: 0;
+  padding: 80px 0;
+}
+.ga-story-quotes > * {
+  min-width: 0;
+}
+.ga-story-stars {
+  text-align: center;
+}
+.ga-story-stars img {
+  width: 79%;
+  margin-inline: auto;
+}
+.ga-story-quotes .ga-story-script {
+  text-align: center;
+}
+.ga-story-quotes .ga-story-script h2 {
+  font-family: "GA Cedarville Cursive", cursive;
+  font-size: 40px;
+  font-weight: 500;
+  color: #222222;
+}
+.ga-story-quotes p {
+  width: 64%;
+  max-width: 64%;
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #323232;
+}
+@media (max-width: 767px) {
+  .ga-shape-top svg {
+    width: calc(104% + 1.3px);
+    height: 28px;
+  }
+  .ga-story-pill h2 {
+    font-size: 18px;
+  }
+  .ga-story-trust-title {
+    width: 100%;
+    max-width: 100%;
+  }
+  .ga-story-trust-title h2 {
+    font-size: 30px;
+  }
+  .ga-story-arrow4 {
+    transform: rotate(31deg);
+  }
+  .ga-story-arrow4 img {
+    width: 61%;
+  }
+  .ga-story-quotes {
+    padding: 50px 0 80px;
+  }
+  .ga-story-stars img {
+    width: 60%;
+  }
+  .ga-story-quotes .ga-story-script h2 {
+    font-size: 28px;
+  }
+  .ga-story-quotes p {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+  }
+}

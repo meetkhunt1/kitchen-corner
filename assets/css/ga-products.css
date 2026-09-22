@@ -1,0 +1,188 @@
+/* ============================================================
+   Kitchen Corner - products page
+   ============================================================ */
+
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 0;
+  padding-inline: var(--ga-gutter);
+}
+@media (max-width: 1024px) {
+  .ga-sec-inner {
+    max-width: min(100%, 1024px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-sec-inner {
+    max-width: min(100%, 767px);
+  }
+}
+
+/* ---------- page banner ---------- */
+.ga-pbanner {
+  min-height: 70vh;
+  border-bottom: 4px dashed #ffffff;
+  background-color: #3a930f85;
+  background-image: url("../media/2025/11/photo-1-scaled.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.ga-pbanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #000000;
+  opacity: 0.37;
+  pointer-events: none;
+}
+.ga-pbanner-inner {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-block: 70px 0;
+  position: relative;
+  z-index: 1;
+}
+.ga-pbanner-inner :is(h1, h2) {
+  font-family: var(--ga-font);
+  font-size: 50px;
+  font-weight: 600;
+  color: #ffffff;
+}
+@media (max-width: 767px) {
+  .ga-pbanner {
+    min-height: 100vh;
+  }
+}
+
+/* ---------- product grid ---------- */
+.ga-plist {
+  background-color: #f8fff1;
+}
+.ga-plist-inner {
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 60px;
+}
+.ga-pgrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: row;
+  gap: 20px;
+  padding: 10px 0;
+  width: 100%;
+  min-width: 0;
+}
+.ga-pcard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  min-width: 0;
+}
+.ga-pcard-media {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 0;
+  min-width: 0;
+  background-color: transparent;
+  background-image: radial-gradient(at center center, #f7f7f7 0%, #f1f1f1 100%);
+  transition: background 0.3s;
+}
+.ga-pcard-media img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  object-position: center center;
+}
+.ga-pcard:hover {
+  cursor: pointer;
+}
+.ga-pcard-foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  min-width: 0;
+}
+.ga-pcard-foot > * {
+  min-width: 0;
+}
+.ga-pcard-foot h2 {
+  font-family: var(--ga-font);
+  font-size: 23px;
+  font-weight: 500;
+  color: #353535;
+}
+.ga-pcard-icon {
+  text-align: center;
+}
+.ga-pcard-icon .ga-icon {
+  display: inline-block;
+  font-size: 38px;
+  line-height: 1;
+  color: transparent;
+}
+.ga-pcard-icon .ga-icon svg {
+  display: inline-block;
+  height: 38px;
+  width: 38px;
+  fill: transparent;
+}
+
+@media (max-width: 767px) {
+  .ga-plist-inner {
+    gap: 0;
+    margin: 0;
+    padding-block: 15px;
+  }
+  .ga-pgrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+    padding: 0;
+  }
+  .ga-pcard {
+    padding: 5px;
+  }
+  .ga-pcard-media {
+    width: 100%;
+    border-radius: 5px;
+  }
+  .ga-pcard-media img {
+    height: 100%;
+  }
+  .ga-pcard-foot {
+    padding: 0;
+  }
+  .ga-pcard-foot h2 {
+    width: 70%;
+    max-width: 70%;
+    font-size: 16px;
+  }
+  .ga-pcard-icon .ga-icon {
+    font-size: 25px;
+  }
+  .ga-pcard-icon .ga-icon svg {
+    height: 25px;
+    width: 25px;
+  }
+}

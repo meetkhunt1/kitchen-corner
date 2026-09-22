@@ -1,0 +1,102 @@
+# Kitchen Corner — Apache config for Hostinger shared hosting.
+# Pretty URLs, canonical host, legacy redirects, compression, caching.
+
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ---------------------------------------------------------------- canonical
+  # Force HTTPS.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # Force the apex host — every canonical tag points at mykitchencorner.in.
+  RewriteCond %{HTTP_HOST} ^www\.mykitchencorner\.in$ [NC]
+  RewriteRule ^(.*)$ https://mykitchencorner.in/$1 [R=301,L]
+
+  # ------------------------------------------------------- .html -> pretty URL
+  # /index.html and /anything/index.html are never the canonical form.
+  RewriteCond %{THE_REQUEST} \s/(.*/)?index\.html[\s?] [NC]
+  RewriteRule ^(.*/)?index\.html$ /%1 [R=301,L,NE]
+
+  # Old flat build: /products.html -> /products/
+  RewriteCond %{THE_REQUEST} \s/([^\s?]+)\.html[\s?] [NC]
+  RewriteRule ^(.+)\.html$ /$1/ [R=301,L,NE]
+
+  # ------------------------------------------------- legacy WordPress uploads
+  # The original site served media from /wp-content/uploads/; keep those URLs
+  # alive so image search results and any external hotlinks still resolve.
+  RewriteRule ^wp-content/uploads/(.*)$ /assets/media/$1 [R=301,L,NE]
+
+  # ------------------------------------------------------------ serve the page
+  # /products/ -> /products/index.html, and add the trailing slash when missing.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^([^.]+?)/?$ /$1/ [R=301,L,NE]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------------ compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/ld+json
+  AddOutputFilterByType DEFLATE application/xml application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml application/manifest+json
+  AddOutputFilterByType DEFLATE font/ttf font/otf application/x-font-ttf
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS application/ld+json image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------------------- caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault                          "access plus 1 month"
+  ExpiresByType text/html                 "access plus 0 seconds"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType video/mp4                 "access plus 1 year"
+  ExpiresByType font/ttf                  "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType application/xml           "access plus 1 hour"
+  ExpiresByType application/manifest+json "access plus 1 week"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|png|jpe?g|webp|svg|mp4|ttf|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# -------------------------------------------------------------------- mime types
+<IfModule mod_mime.c>
+  AddType image/webp                 .webp
+  AddType image/svg+xml              .svg
+  AddType video/mp4                  .mp4
+  AddType font/woff2                 .woff2
+  AddType font/ttf                   .ttf
+  AddType application/manifest+json  .webmanifest
+  AddCharset UTF-8 .html .css .js .json .xml .webmanifest
+</IfModule>

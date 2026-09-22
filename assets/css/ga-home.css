@@ -1,0 +1,1524 @@
+/* ============================================================
+   Kitchen Corner - home page
+   ============================================================ */
+
+/* containers shrink past their content; widgets clamp with max-width */
+.ga-hero-copy,
+.ga-hero-tag,
+.ga-hero-rule,
+.ga-hero-scroll,
+.ga-hero-scroll-inner,
+.ga-experts-media,
+.ga-experts-copy,
+.ga-product-row,
+.ga-product-card,
+.ga-product-media,
+.ga-product-foot,
+.ga-journey-row,
+.ga-journey-art,
+.ga-journey-text,
+.ga-journey-logo,
+.ga-mood-copy,
+.ga-mood-head,
+.ga-mood-media,
+.ga-trust-line,
+.ga-trust-title,
+.ga-flavor,
+.ga-flavor-jars,
+.ga-batch-media,
+.ga-batch-copy,
+.ga-marquee,
+.ga-timeline-inner,
+.ga-reviews-inner {
+  min-width: 0;
+}
+
+/* ---------- shared section scaffolding ---------- */
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  padding-inline: var(--ga-gutter);
+}
+/* full-bleed bands opt out of the gutter */
+.ga-pan > .ga-sec-inner,
+.ga-marquee-sec > .ga-sec-inner {
+  padding-inline: 0;
+}
+@media (max-width: 1024px) {
+  .ga-sec-inner {
+    max-width: min(100%, 1024px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-sec-inner {
+    max-width: min(100%, 767px);
+  }
+}
+
+/* ============================================================
+   1. HERO
+   ============================================================ */
+.ga-hero {
+  min-height: 100vh;
+  margin-top: -50px;
+  padding: 0;
+  overflow: visible;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.ga-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #222222;
+  opacity: 0.32;
+  z-index: 1;
+  pointer-events: none;
+}
+.ga-hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  direction: ltr;
+}
+.ga-hero-video-wrap video {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+}
+.ga-hero-inner {
+  flex-direction: row;
+  align-items: center;
+  gap: 60px;
+  padding-block: 50px 0;
+}
+.ga-hero-copy {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+.ga-hero-title {
+  width: 58%;
+  max-width: 58%;
+  font-family: var(--ga-font);
+  font-size: 55px;
+  font-weight: 500;
+  text-transform: capitalize;
+  line-height: 78px;
+  color: #ffffff;
+}
+.ga-hero-tag {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding: 10px;
+}
+.ga-hero-rule {
+  width: 13%;
+  max-width: 13%;
+  flex: 0 0 13%;
+  display: flex;
+  padding-block: 15px;
+}
+.ga-hero-rule span {
+  display: block;
+  width: 100%;
+  border-block-start: 2.6px solid #ffffff;
+}
+.ga-hero-tagtext {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 300;
+  color: #ffffff;
+}
+.ga-hero-lead {
+  width: 64%;
+  max-width: 64%;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  text-transform: capitalize;
+  color: #ffffff;
+}
+.ga-hero-scroll {
+  position: absolute;
+  right: var(--ga-gutter);
+  bottom: 20px;
+  width: 47%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 10px 0;
+  z-index: 3;
+}
+.ga-hero-scroll-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-hero-scroll-inner p {
+  text-align: end;
+  color: #ffffff;
+  font-family: var(--ga-font);
+}
+
+@media (max-width: 767px) {
+  .ga-hero {
+    padding: 0;
+  }
+  .ga-hero-inner {
+    flex-direction: row;
+    justify-content: center;
+    padding-block: 0;
+  }
+  .ga-hero-copy {
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0;
+  }
+  .ga-hero-title {
+    width: 90%;
+    max-width: 90%;
+    font-size: 32px;
+    line-height: 1.2em;
+  }
+  .ga-hero-tag {
+    gap: 0 5px;
+  }
+  .ga-hero-lead {
+    width: 90%;
+    max-width: 90%;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
+  .ga-hero-scroll {
+    width: auto;
+    left: var(--ga-gutter);
+    right: auto;
+    flex-direction: row-reverse;
+  }
+  .ga-hero-scroll-inner {
+    gap: 0 5px;
+  }
+  .ga-hero-scroll-inner img {
+    width: 15px;
+  }
+}
+
+/* ============================================================
+   2. CHOSEN BY EXPERTS
+   ============================================================ */
+.ga-experts-inner {
+  flex-direction: row;
+  gap: 0 3%;
+  padding-block: 117px;
+}
+.ga-experts-media {
+  display: flex;
+  flex-direction: column;
+  width: 56%;
+  flex-shrink: 1;
+  padding: 10px 0;
+}
+.ga-experts-media img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border: 1px solid #334155;
+  border-radius: 25px;
+}
+.ga-experts-copy {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  flex-shrink: 1;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px 0;
+  padding: 10px 0;
+}
+.ga-experts-copy h2 {
+  width: 100%;
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  font-style: italic;
+  color: #215836;
+}
+.ga-experts-copy p {
+  width: 86%;
+  max-width: 86%;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 36px;
+  color: #4b4a4a;
+}
+
+@media (max-width: 767px) {
+  .ga-experts-inner {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+    padding-block: 40px 0;
+  }
+  .ga-experts-media {
+    width: 100%;
+    padding: 11px 0;
+  }
+  .ga-experts-media img {
+    width: 100%;
+    height: 350px;
+    border-radius: 12px;
+  }
+  .ga-experts-copy {
+    width: 100%;
+    gap: 8px 0;
+  }
+  .ga-experts-copy h2 {
+    font-size: 30px;
+    line-height: 1.2em;
+  }
+  .ga-experts-copy p {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.4em;
+  }
+}
+
+/* ============================================================
+   3. PRODUCT CARDS
+   ============================================================ */
+.ga-products-inner {
+  flex-direction: column;
+  align-items: center;
+  gap: 0 15px;
+  padding-block: 0 50px;
+}
+.ga-product-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.ga-product-card {
+  display: flex;
+  flex-direction: column;
+  width: 32%;
+  gap: 0;
+  border: 1px solid #334155;
+  border-radius: 25px;
+  padding: 0 0 70px;
+  margin: 0;
+  background-color: #f1fff4;
+}
+.ga-product-card .ga-product-media {
+  padding: 40px 30px 30px;
+}
+.ga-product-card .ga-product-media img {
+  width: 450px;
+  max-width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 24px;
+}
+.ga-product-card:hover {
+  cursor: pointer;
+}
+.ga-product-media {
+  overflow: hidden;
+  border-radius: 24px;
+}
+.ga-product-foot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+}
+.ga-product-foot .ga-product-name {
+  font-family: var(--ga-font);
+  line-height: 1;
+  font-size: 28px;
+  font-weight: 400;
+  color: #000000;
+}
+.ga-product-foot img {
+  width: 48px;
+  height: 48px;
+}
+
+/* full-width "Explore All Products" button with the printed shadow */
+.ga-shadow-btn {
+  width: 100%;
+  max-width: 100%;
+  margin: 30px 0 0;
+  padding: 0 0 10px;
+  text-align: center;
+}
+.ga-shadow-btn .ga-btn {
+  position: relative;
+  width: 100%;
+  background-color: #72b539;
+  font-family: var(--ga-font);
+  font-size: 30px;
+  font-weight: 500;
+  color: #ffffff;
+  fill: #ffffff;
+  border-radius: 10px;
+  padding: 1% 40% 1% 40.5%;
+  transition: background-color 0.25s ease;
+}
+.ga-shadow-btn .ga-btn:hover {
+  background-color: #63a02f;
+  filter: none;
+}
+
+@media (max-width: 767px) {
+  .ga-products-inner {
+    gap: 15px 0;
+    padding-block: 40px;
+  }
+  .ga-product-row {
+    flex-wrap: wrap;
+    gap: 10px 0;
+  }
+  .ga-product-card {
+    width: 49%;
+    min-height: 0;
+    border-radius: 12px;
+    padding: 0;
+  }
+  .ga-product-card .ga-product-media {
+    padding: 0;
+  }
+  .ga-product-card .ga-product-media img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .ga-product-foot {
+    min-height: 52px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    padding: 10px 5px;
+  }
+  .ga-product-foot .ga-product-name {
+    width: 78%;
+    max-width: 78%;
+    font-size: 16px;
+  }
+  .ga-product-foot img {
+    width: 80%;
+    height: auto;
+  }
+  .ga-shadow-btn {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .ga-shadow-btn .ga-btn {
+    font-size: 18px;
+    border-radius: 10px;
+    padding: 3% 25%;
+  }
+}
+
+/* ============================================================
+   4. HARVESTED / BLENDED  (scroll journey)
+   ============================================================ */
+#ga-journey {
+  position: relative;
+  background-color: rgba(109, 188, 71, 0.3412);
+}
+.ga-journey-inner {
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 125px;
+}
+.ga-journey-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-journey-art {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex-shrink: 1;
+  padding: 10px 0;
+}
+.ga-journey-fig {
+  width: 100%;
+  max-width: 100%;
+}
+.ga-journey-fig svg {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.ga-journey-row-2 .ga-journey-fig {
+  width: auto;
+  max-width: 100%;
+  align-self: flex-end;
+}
+.ga-journey-text {
+  display: flex;
+  width: 100%;
+  flex-shrink: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  flex-direction: column;
+}
+.ga-journey-text h2 {
+  min-width: 0;
+  max-width: 100%;
+  font-family: var(--ga-font);
+  font-size: 70px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.2em;
+  color: #000000;
+}
+.ga-journey-row-2 {
+  flex-direction: row-reverse;
+  margin-top: 100px;
+}
+.ga-journey-row-2 .ga-journey-art {
+  align-items: flex-end;
+}
+.ga-journey-text-2 {
+  justify-content: center;
+  align-items: flex-start;
+}
+.ga-journey-text-2 h2 {
+  text-align: start;
+  font-style: italic;
+}
+.ga-journey-text-2 p {
+  width: 78%;
+  max-width: 78%;
+  margin-block-end: 1.6em;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  color: #4b4a4a;
+}
+.ga-journey-logo .ga-journey-fig {
+  width: auto;
+  max-width: 100%;
+}
+.ga-journey-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 350px;
+  padding: 10px 0;
+}
+.ga-journey-arrow {
+  --ga-flip-y: -1;
+  transform: scaleY(var(--ga-flip-y));
+}
+
+/* floating actors driven by the scroll animation */
+.ga-floater {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100px !important;
+  width: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+}
+#ga-water {
+  height: 50px !important;
+}
+@media (max-width: 980px) {
+  #ga-garlic,
+  #ga-water {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .ga-svg-farmer,
+  .ga-svg-lady {
+    width: 80% !important;
+  }
+  .ga-svg-logo {
+    width: 300px !important;
+    height: auto;
+  }
+}
+@media (max-width: 767px) {
+  .ga-floater {
+    width: 34px;
+  }
+  .ga-journey-row {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+  }
+  .ga-journey-text:not(.ga-journey-text-2) {
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+  }
+  .ga-journey-text-2 p {
+    margin-block-end: 0;
+  }
+  .ga-journey-text h2 {
+    font-size: 32px;
+    margin: 0;
+    padding: 0;
+  }
+  .ga-journey-row-2 {
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+  .ga-journey-text-2 p {
+    width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.4em;
+  }
+  .ga-journey-logo {
+    margin-top: 0;
+  }
+  .ga-journey-arrow {
+    --ga-flip-y: 1;
+    transform: rotate(321deg);
+  }
+  .ga-journey-arrow img {
+    width: 215px;
+  }
+}
+
+/* ============================================================
+   5. COOKING GETS EASIER  (grain band)
+   ============================================================ */
+.ga-grain {
+  padding: 0;
+  justify-content: center;
+  align-items: flex-start;
+  border-block: 3px dashed #cfcfcf;
+  background-image: url("../media/2025/11/f440caa488d3116c863c1dd060db261c6ea4c088.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.ga-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(111deg, #72b539cf 28%, #000000 100%);
+  opacity: 0.71;
+  pointer-events: none;
+}
+.ga-grain-inner {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding-block: 100px;
+  position: relative;
+  z-index: 1;
+}
+.ga-grain-inner h2 {
+  width: 60%;
+  max-width: 60%;
+  text-align: start;
+  font-family: var(--ga-font);
+  font-size: 50px;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-style: italic;
+  letter-spacing: -0.6px;
+  color: #ffffff;
+}
+.ga-grain-inner p {
+  text-align: start;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  color: #ffffff;
+}
+.ga-grain-inner .ga-grain-p2 {
+  line-height: 39px;
+}
+@media (max-width: 767px) {
+  .ga-grain {
+    min-height: 64vh;
+    padding: 0;
+  }
+  .ga-grain-inner {
+    gap: 5px 0;
+    padding-block: 0;
+  }
+  .ga-grain-inner h2 {
+    width: 100%;
+    max-width: 100%;
+    font-size: 32px;
+  }
+  .ga-grain-inner p,
+  .ga-grain-inner .ga-grain-p2 {
+    font-size: 16px;
+    line-height: 1.4em;
+  }
+}
+
+/* ============================================================
+   6. MATCH THE FLAVOR
+   ============================================================ */
+.ga-mood-inner {
+  flex-direction: row;
+  gap: 0;
+  padding-block: 75px;
+}
+.ga-mood-copy {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-mood-head {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0;
+}
+.ga-mood-head h2 {
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  color: #215836;
+}
+.ga-textpath {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  width: 19%;
+  max-width: 19%;
+  flex: 0 0 19%;
+  font-family: var(--ga-font);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1px;
+  letter-spacing: 4.1px;
+  word-spacing: 0px;
+}
+.ga-textpath svg {
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.ga-textpath svg path {
+  fill: transparent;
+  stroke: transparent;
+}
+.ga-textpath svg text {
+  direction: rtl;
+  fill: #4b4a4a;
+  font-family: var(--ga-font);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 4.1px;
+}
+.ga-mood-copy > p {
+  margin-block-end: 1.6em;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: capitalize;
+  color: #4b4a4a;
+}
+.ga-mood-media {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 48px;
+  margin: 0;
+  padding: 10px 0;
+}
+.ga-mood-media .ga-mood-pan {
+  text-align: end;
+}
+.ga-mood-media img {
+  margin-inline-start: auto;
+}
+@media (max-width: 1024px) {
+  .ga-textpath svg {
+    width: 500px;
+  }
+}
+@media (max-width: 767px) {
+  .ga-mood-inner {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+    padding-block: 75px 40px;
+  }
+  .ga-mood-copy {
+    gap: 10px 0;
+  }
+  .ga-mood-head {
+    gap: 0;
+    padding: 0;
+  }
+  .ga-mood-head h2 {
+    width: 76%;
+    max-width: 76%;
+    padding: 0;
+    font-size: 32px;
+    line-height: 1em;
+  }
+  .ga-textpath {
+    right: 60px;
+    top: 0;
+    font-size: 36px;
+  }
+  .ga-textpath svg {
+    width: 300px;
+  }
+  .ga-textpath svg text {
+    font-size: 36px;
+  }
+  .ga-mood-copy > p {
+    margin-block-end: 0;
+    font-size: 16px;
+    line-height: 1.4em;
+  }
+  .ga-mood-copy,
+  .ga-mood-media {
+    width: 100%;
+  }
+  .ga-mood-media {
+    margin-top: -50px;
+    padding: 0;
+  }
+  .ga-mood-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ============================================================
+   7. INSIDE HOMES THAT TRUST KC
+   ============================================================ */
+.ga-trust {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #4d8c3b;
+}
+.ga-trust-line {
+  width: 24%;
+  max-width: 24%;
+  flex: 0 0 24%;
+}
+.ga-trust-line img {
+  width: 100%;
+  max-width: 100%;
+}
+.ga-trust-line-l {
+  text-align: start;
+  align-self: flex-start;
+}
+.ga-trust-line-r {
+  text-align: end;
+}
+.ga-trust-line-r img {
+  margin-inline-start: auto;
+}
+.ga-trust-title {
+  display: flex;
+  flex-direction: column;
+  width: 34.34%;
+  flex: 0 0 34.34%;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+.ga-trust-title .ga-trust-heading {
+  width: 100%;
+  max-width: 100%;
+  align-self: center;
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  color: #ffffff;
+}
+@media (max-width: 767px) {
+  .ga-trust {
+    gap: 0;
+    padding: 20px 0;
+  }
+  .ga-trust-title {
+    width: 100%;
+    flex: 0 0 100%;
+    gap: 8px 0;
+  }
+  .ga-trust-title .ga-trust-heading {
+    text-align: center;
+    font-size: 25px;
+  }
+}
+
+/* ---------- panning collage strip ---------- */
+.ga-pan {
+  min-height: 50vh;
+  border-block: 1px dashed var(--ga-accent);
+  padding: 0;
+  background-image: url("../media/2025/11/Grid-1-scaled.png");
+  background-position: center center;
+  background-repeat: repeat-x;
+  background-size: cover;
+  animation: ga-pan-ping 20s ease-in-out infinite alternate;
+}
+@keyframes ga-pan-ping {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-pan {
+    min-height: 22vh;
+    background-size: cover;
+  }
+}
+
+/* ---------- marquee ---------- */
+.ga-marquee-sec {
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  background-color: #4d8c3b;
+}
+.ga-marquee {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  background-color: #4d8c3b;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 40px;
+  align-items: center;
+  font-family: var(--ga-font);
+}
+.ga-marquee-track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  padding-inline-end: 0;
+  animation: ga-marquee-run 22s linear infinite;
+}
+@keyframes ga-marquee-run {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@media (max-width: 767px) {
+  .ga-marquee-sec {
+    margin: 0;
+    padding: 5px;
+  }
+  .ga-marquee {
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+/* ============================================================
+   8. FLAVOR, JUST THE WAY YOU LIKE IT
+   ============================================================ */
+.ga-flavor {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 80px 0 0;
+}
+.ga-flavor h2 {
+  width: 50%;
+  max-width: 50%;
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 60px;
+  font-weight: 400;
+  line-height: 65px;
+  color: #215836;
+}
+.ga-flavor-leaf-l {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 24%;
+  max-width: 24%;
+  animation: ga-hang-swing 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-delay: -1.2s;
+}
+.ga-flavor-leaf-r {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  animation: ga-hang-swing 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  animation-duration: 5s;
+}
+@keyframes ga-hang-swing {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(0deg) translateY(10px);
+  }
+  50% {
+    transform: rotate(0.5deg) translateY(1px);
+  }
+  75% {
+    transform: rotate(-0.5deg) translateY(-1px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+.ga-flavor-jars {
+  display: flex;
+  flex-direction: row;
+  width: 65%;
+  min-height: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: center;
+  gap: 0;
+  margin: 0 0 -100px;
+  padding: 10px;
+}
+.ga-jar-label {
+  align-self: flex-start;
+}
+.ga-jar-a {
+  margin: 0 -40px 0 0;
+}
+.ga-jar-a:hover {
+  cursor: pointer;
+  transform: translateY(-25px);
+}
+.ga-jar-b {
+  margin: 0;
+  z-index: 1;
+}
+.ga-jar-b:hover {
+  cursor: pointer;
+  transform: translateY(-25px);
+}
+.ga-jar-c {
+  margin: 0 0 0 -40px;
+  transform: translateY(0);
+}
+.ga-jar-c:hover {
+  cursor: pointer;
+  transform: translateY(-25px);
+}
+.ga-jar-a,
+.ga-jar-b,
+.ga-jar-c {
+  transition: transform 0.4s ease;
+}
+.ga-jar-a img,
+.ga-jar-b img,
+.ga-jar-c img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+.ga-jar-ginger {
+  align-self: center;
+}
+@media (max-width: 767px) {
+  .ga-flavor {
+    padding: 40px 0 0;
+  }
+  .ga-flavor h2 {
+    width: 100%;
+    max-width: 100%;
+    font-size: 32px;
+    line-height: 1.2em;
+  }
+  .ga-flavor-leaf-l {
+    width: 54%;
+    max-width: 54%;
+    bottom: 180px;
+    left: -47px;
+  }
+  .ga-flavor-leaf-l img {
+    width: 52%;
+  }
+  .ga-flavor-leaf-r {
+    width: 100%;
+    max-width: 100%;
+    bottom: 180px;
+    right: 0;
+  }
+  .ga-flavor-leaf-r img {
+    width: 25%;
+    margin-inline-start: auto;
+  }
+  .ga-flavor-jars {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0;
+    margin: 0 0 -41px;
+  }
+  .ga-jar-label {
+    margin: -40px -40px 0 0;
+  }
+  .ga-jar-label img {
+    width: 78%;
+  }
+  .ga-jar-a:hover,
+  .ga-jar-b:hover,
+  .ga-jar-c:hover {
+    transform: translateY(-10px);
+  }
+  .ga-jar-a img,
+  .ga-jar-b img,
+  .ga-jar-c img {
+    width: 100%;
+    height: 100%;
+  }
+  .ga-jar-ginger {
+    align-self: flex-start;
+    margin: -40px 0 0 -60px;
+    transform: rotate(360deg);
+  }
+  .ga-jar-ginger-m {
+    align-self: flex-start;
+    margin: -40px 0 0 -40px;
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   9. HOW EVERY BATCH COMES TO LIFE
+   ============================================================ */
+.ga-batch-inner {
+  flex-direction: row;
+  gap: 0 3%;
+  padding-block: 117px;
+}
+.ga-batch-media {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding: 10px 0;
+}
+.ga-batch-media img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  object-position: center center;
+  border-radius: 25px;
+}
+.ga-batch-copy {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px 0;
+  padding: 10px 0;
+}
+.ga-batch-copy h2 {
+  width: 100%;
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  font-style: italic;
+  color: #215836;
+}
+.ga-batch-copy p {
+  width: 86%;
+  max-width: 86%;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 36px;
+  color: #4b4a4a;
+}
+.ga-batch-copy .ga-btn {
+  background-color: #215836;
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  fill: #ffffff;
+  border-radius: 10px;
+  padding: 20px 35px;
+}
+@media (max-width: 767px) {
+  .ga-batch-inner {
+    flex-wrap: wrap;
+    gap: 0;
+    padding-block: 50px 25px;
+  }
+  .ga-batch-media {
+    width: 100%;
+  }
+  .ga-batch-media img {
+    width: 100%;
+    height: 350px;
+    border-radius: 12px;
+  }
+  .ga-batch-copy {
+    width: 100%;
+    gap: 8px 0;
+    padding: 10px 0;
+  }
+  .ga-batch-copy h2 {
+    font-size: 32px;
+    line-height: 1.2em;
+  }
+  .ga-batch-copy p {
+    width: 100%;
+    max-width: 100%;
+    font-size: 18px;
+    line-height: 1.4em;
+  }
+}
+
+/* ---------- steam above the logo pan ---------- */
+.ga-steam {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.ga-steam.ga-steam-on {
+  visibility: visible;
+  opacity: 1;
+}
+.ga-steam.ga-steam-on path {
+  animation: ga-steam-rise 1.8s ease-in-out infinite;
+}
+.ga-steam.ga-steam-on path:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.ga-steam.ga-steam-on path:nth-child(3) {
+  animation-delay: 0.24s;
+}
+@keyframes ga-steam-rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+}
+
+/* ============================================================
+   Sections the original ships disabled on every breakpoint.
+   Kept for completeness (`ga-hide-all`); these styles apply if
+   the hide class is removed.
+   ============================================================ */
+
+/* --- "The Story Behind The Flavor" band --- */
+.ga-storyline-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  gap: 0;
+  margin-top: 50px;
+  padding: 40px 0 0;
+}
+.ga-storyline-rule {
+  width: 24%;
+  max-width: 24%;
+  flex: 0 0 24%;
+  align-self: flex-start;
+  text-align: start;
+}
+.ga-storyline-rule img {
+  width: 100%;
+  max-width: 100%;
+}
+.ga-storyline-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+.ga-storyline-kicker {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: #000000;
+}
+.ga-storyline-title {
+  width: 100%;
+  max-width: 100%;
+  align-self: center;
+  text-align: center;
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
+  color: #215836;
+}
+
+/* --- timeline tabs --- */
+.ga-timeline-inner {
+  flex-direction: column;
+  gap: 20px;
+  padding-block: 75px 50px;
+}
+.ga-tabs {
+  width: 100%;
+  min-width: 0;
+}
+.ga-tabs-head {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+.ga-tabs-head::after {
+  content: "";
+  background-color: #215836;
+  height: 3px;
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ga-tab-title {
+  position: relative;
+  z-index: 4;
+  padding: 15px 60px;
+  font-family: var(--ga-font);
+  font-size: 21px;
+  font-weight: 500;
+  color: #000000;
+  background: #eaf3e2;
+  border: 2px solid #215836;
+  border-radius: 100px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.ga-tab-title:hover,
+.ga-tab-title.ga-is-active {
+  background: #215836;
+  color: #ffffff;
+}
+.ga-tab-panel {
+  display: none;
+}
+.ga-tab-panel.ga-is-active {
+  display: block;
+}
+.ga-tl-card {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0 25px;
+  border-radius: 15px;
+  margin-top: 25px;
+  padding: 25px;
+  background-color: #ffffff;
+}
+.ga-tl-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-self: flex-start;
+  min-width: 0;
+  gap: 20px 0;
+  padding: 80px 0 0;
+}
+.ga-tl-copy h2 {
+  width: 75%;
+  max-width: 75%;
+  font-family: var(--ga-font);
+  font-size: 50px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #000000;
+}
+.ga-tl-copy p {
+  width: 75%;
+  max-width: 75%;
+  font-family: var(--ga-font);
+  font-size: 21px;
+  font-weight: 300;
+  color: #4b4a4a;
+}
+.ga-tl-year {
+  position: absolute;
+  left: 15px;
+  font-family: var(--ga-font);
+  font-size: 140px;
+  font-weight: 600;
+  line-height: 1;
+  color: #00000036;
+}
+.ga-tl-media {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+}
+.ga-tl-media img {
+  align-self: flex-end;
+  width: 553px;
+  max-width: 100%;
+  height: 648px;
+  object-fit: cover;
+}
+
+/* --- customer reviews carousel --- */
+.ga-reviews-inner {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 0;
+  margin: 0;
+  padding-block: 100px 75px;
+}
+.ga-reviews-kicker {
+  font-family: var(--ga-font);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: #000000;
+}
+.ga-reviews-title {
+  font-family: var(--ga-font);
+  font-size: 40px;
+  font-weight: 500;
+  color: #215836;
+}
+.ga-review-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  min-width: 0;
+  gap: 0;
+  margin: 0;
+  padding: 10px;
+}
+.ga-review-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  min-width: 0;
+  border-radius: 25px;
+  padding: 40px 10px;
+  background-color: #ffffff7a;
+}
+.ga-review-inner p {
+  width: 80%;
+  max-width: 80%;
+  font-family: var(--ga-font);
+  font-size: 20px;
+  font-weight: 400;
+}
+.ga-review-rule {
+  display: flex;
+  width: 80%;
+  max-width: 80%;
+  padding-block: 15px;
+}
+.ga-review-rule span {
+  display: block;
+  width: 100%;
+  border-block-start: 1.1px solid #000;
+}
+.ga-review-name {
+  font-family: var(--ga-font);
+  font-size: 21px;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1;
+  color: #000000;
+}

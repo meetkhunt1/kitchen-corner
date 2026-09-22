@@ -1,0 +1,364 @@
+/* ============================================================
+   Kitchen Corner - Contact page
+   ============================================================ */
+
+.ga-sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+.ga-sec-inner {
+  width: 100%;
+  max-width: min(100%, 1500px);
+  margin: 0 auto;
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  min-width: 0;
+  padding-inline: var(--ga-gutter);
+}
+@media (max-width: 1024px) {
+  .ga-sec-inner {
+    max-width: min(100%, 1024px);
+  }
+}
+@media (max-width: 767px) {
+  .ga-sec-inner {
+    max-width: min(100%, 767px);
+    flex-wrap: wrap;
+  }
+}
+.ga-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px;
+  padding: 10px 0;
+}
+.ga-col > * {
+  min-width: 0;
+}
+.ga-figure {
+  position: relative;
+}
+.ga-rte p {
+  margin-block-end: 0;
+}
+
+/* ---------- top band ---------- */
+.ga-contact-top {
+  background-color: #6dbc4750;
+}
+.ga-contact-top-inner {
+  flex-direction: row;
+  gap: 0;
+  padding-block: 250px 50px;
+}
+.ga-contact-intro :is(h1, h2) {
+  font-family: var(--ga-font);
+  font-size: 58px;
+  font-weight: 500;
+  color: #215836;
+}
+.ga-contact-intro .ga-contact-heading {
+  width: 75%;
+  max-width: 75%;
+}
+.ga-contact-arrow {
+  align-self: flex-start;
+  width: 70%;
+  max-width: 70%;
+  text-align: center;
+}
+.ga-contact-arrow img {
+  width: 15%;
+  height: 100%;
+  margin-inline: auto;
+}
+.ga-contact-cards {
+  gap: 20px;
+}
+.ga-contact-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  gap: 20px 0;
+  border-radius: 15px;
+  margin: 0;
+  padding: 40px 30px;
+  background-color: #72b539;
+}
+.ga-contact-card > * {
+  min-width: 0;
+}
+.ga-contact-card :is(h1, h2) {
+  font-family: var(--ga-font);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.4em;
+  color: #ffffff;
+}
+.ga-contact-lines {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  gap: 5px 0;
+  margin: 0;
+  padding: 0;
+}
+.ga-contact-lines > * {
+  min-width: 0;
+}
+.ga-contact-lines .ga-rte {
+  font-family: var(--ga-font);
+  font-size: 19px;
+  font-weight: 400;
+  color: #f8f8f8;
+}
+.ga-contact-lines a {
+  color: #ffffff;
+}
+.ga-contact-social {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  gap: 0 10px;
+  margin: 0;
+  padding: 0;
+}
+.ga-contact-social > * {
+  min-width: 0;
+}
+.ga-contact-icon {
+  text-align: center;
+}
+.ga-contact-icon a {
+  display: inline-block;
+  font-size: 36px;
+  line-height: 1;
+  color: #ffffff;
+}
+.ga-contact-icon svg {
+  display: inline-block;
+  height: 36px;
+  width: 36px;
+  fill: #ffffff;
+  transform: rotate(0deg);
+}
+@media (min-width: 768px) {
+  .ga-contact-intro,
+  .ga-contact-cards {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .ga-contact-top-inner {
+    padding-block: 125px 0;
+  }
+  .ga-contact-intro {
+    gap: 0;
+    padding: 0;
+  }
+  .ga-contact-intro :is(h1, h2) {
+    font-size: 32px;
+  }
+  .ga-contact-cards {
+    gap: 5px 0;
+    margin: 0;
+    padding: 5px 0;
+  }
+  .ga-contact-card {
+    gap: 10px 0;
+    border-radius: 10px;
+    padding: 15px;
+  }
+  .ga-contact-card :is(h1, h2) {
+    font-size: 22px;
+  }
+  .ga-contact-lines .ga-rte {
+    font-size: 15px;
+  }
+  .ga-contact-icon a {
+    font-size: 24px;
+  }
+  .ga-contact-icon svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+/* ---------- form band ---------- */
+.ga-contact-formband {
+  background-color: #6dbc4750;
+}
+.ga-contact-formband-inner {
+  flex-direction: column;
+  gap: 20px;
+  /* breathing room between the form card and the footer */
+  padding-block: 0 80px;
+}
+.ga-form-wrap {
+  padding: 0;
+  width: 100%;
+  min-width: 0;
+}
+@media (max-width: 767px) {
+  .ga-contact-formband-inner {
+    gap: 0;
+    margin: 0;
+    padding-block: 25px 50px;
+  }
+  .ga-form-wrap {
+    padding: 0;
+  }
+}
+
+/* ---------- the form ---------- */
+.ga-form {
+  font-family: "GA Roboto", Roboto, Arial, sans-serif;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 50px;
+  width: 100%;
+  min-width: 0;
+}
+.ga-form-row {
+  display: flex;
+  margin: 0 -15px 30px;
+}
+.ga-form-col {
+  width: 100%;
+  min-width: 0;
+  padding: 0 15px;
+}
+.ga-form-field {
+  width: 100%;
+  min-width: 0;
+}
+.ga-form-label {
+  display: block;
+  font-family: "GA Roboto", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: #1e293b;
+}
+.ga-form-required {
+  color: #e51919;
+}
+.ga-form-input,
+.ga-form-textarea {
+  display: block;
+  width: 100%;
+  font-family: "GA Roboto", Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #475569;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  padding: 9px;
+  margin: 0;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+.ga-form-input:focus,
+.ga-form-textarea:focus {
+  outline: none;
+  border-color: #72b539;
+}
+.ga-form-textarea {
+  min-height: 140px;
+  height: 140px;
+  line-height: 20px;
+  resize: vertical;
+}
+.ga-form-desc {
+  display: block;
+  font-family: var(--ga-font);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #334155;
+  margin: 0 0 5px;
+}
+.ga-form-submit {
+  display: inline-block;
+  font-family: "GA Roboto", Roboto, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #ffffff;
+  background-color: #72b539;
+  border: 0;
+  border-radius: 2px;
+  padding: 10px;
+  min-width: 100px;
+  cursor: pointer;
+  transition: filter 0.2s ease;
+}
+.ga-form-submit:hover {
+  filter: brightness(1.06);
+}
+.ga-form-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.ga-form-message {
+  display: none;
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+.ga-form-message.ga-is-visible {
+  display: block;
+}
+.ga-form-message.ga-is-error {
+  background: #fdecec;
+  color: #b42318;
+  border: 1px solid #f3b9b4;
+}
+.ga-form-message.ga-is-success {
+  background: #eef8e6;
+  color: #2c6b16;
+  border: 1px solid #b9dfa0;
+}
+.ga-form-input.ga-has-error,
+.ga-form-textarea.ga-has-error {
+  border-color: #e51919;
+}
+@media (max-width: 782px) {
+  .ga-form-submit {
+    width: 100%;
+    margin: 0 0 10px;
+  }
+}
+@media (max-width: 768px) {
+  .ga-form {
+    padding: 15px;
+    border-radius: 15px;
+  }
+  .ga-form-row {
+    margin: 0 0 20px;
+  }
+  .ga-form-col {
+    padding: 0;
+  }
+  .ga-form-label {
+    font-size: 15px;
+  }
+}
