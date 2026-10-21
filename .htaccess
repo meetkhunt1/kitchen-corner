@@ -32,6 +32,13 @@ DirectoryIndex index.html
   # alive so image search results and any external hotlinks still resolve.
   RewriteRule ^wp-content/uploads/(.*)$ /assets/media/$1 [R=301,L,NE]
 
+  # ---------------------------------------------------------- product pages
+  # Every /product/<slug>/ is served by one template; ga-shop.js reads the
+  # slug from the URL and loads the product from WooCommerce.
+  RewriteRule ^product/?$ /products/ [R=301,L]
+  RewriteRule ^product/([^/.]+)$ /product/$1/ [R=301,L,NE]
+  RewriteRule ^product/[^/.]+/$ /product/index.html [L]
+
   # ------------------------------------------------------------ serve the page
   # /products/ -> /products/index.html, and add the trailing slash when missing.
   RewriteCond %{REQUEST_FILENAME} !-f

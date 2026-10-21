@@ -117,6 +117,22 @@
 .ga-legal-lead li > p {
   margin-block-end: 0;
 }
+.ga-legal-body ol.ga-legal-ol {
+  list-style: decimal outside;
+  margin: 0;
+  padding: 0 0 0 24px;
+}
+.ga-legal-ol > li + li {
+  margin-top: 14px;
+}
+.ga-legal-ol ol {
+  list-style: lower-alpha outside;
+  margin: 12px 0 0;
+  padding: 0 0 0 24px;
+}
+.ga-legal-ol ol > li + li {
+  margin-top: 8px;
+}
 .ga-legal-body a,
 .ga-legal-lead a {
   color: inherit;

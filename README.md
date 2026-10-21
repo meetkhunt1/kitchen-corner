@@ -18,14 +18,19 @@ so nothing that ranks today changes address.
 | `/why-choose-us/` | `why-choose-us/index.html` |
 | `/our-founders-journey/` | `our-founders-journey/index.html` |
 | `/products/` | `products/index.html` |
+| `/product/<slug>/` | `product/index.html` (one template for every product) |
 | `/contact-us/` | `contact-us/index.html` |
 | `/privacy-policy/` | `privacy-policy/index.html` |
 | `/terms-conditions/` | `terms-conditions/index.html` |
+| `/refund-cancellation-policy/` | `refund-cancellation-policy/index.html` |
+| `/return-policy/` | `return-policy/index.html` |
+| `/shipping-policy/` | `shipping-policy/index.html` |
 | 404 | `404.html` |
 
 Every link and asset reference is root-relative (`/assets/…`), so pages work at
 any depth. `.htaccess` handles the rest: HTTPS, the apex host, trailing slashes,
-and 301s from the old `/page.html` and `/wp-content/uploads/…` paths.
+and 301s from the old `/page.html` and `/wp-content/uploads/…` paths. It also
+rewrites every `/product/<slug>/` to the single product template.
 
 ## Structure
 
@@ -35,7 +40,7 @@ index.html               home
 404.html                 error page (noindex)
 .htaccess                rewrites, redirects, compression, caching, headers
 robots.txt               allows everything, points at the sitemap
-sitemap.xml              all seven canonical URLs
+sitemap.xml              every canonical page URL (product pages not yet)
 site.webmanifest         icons, theme colour, install metadata
 assets/
   css/
@@ -46,16 +51,59 @@ assets/
     ga-why.css       why choose us
     ga-story.css     founder story (+ the carousel component)
     ga-contact.css   contact page and form
-    ga-legal.css     privacy policy / terms / 404
+    ga-legal.css     policy pages (privacy, terms, refund, return, shipping) / 404
+    ga-shop.css      header cart, cart drawer, product cards, product page
   js/
     ga-main.js       smooth scroll, nav, flyout, IG button, ticker, tabs, anchors
     ga-journey.js    scroll-scrubbed "Harvested / Blended" animation (home)
     ga-carousel.js   looping slider with arrows, dots, autoplay, swipe
     ga-form.js       contact form counter + validation
+    ga-shop-config.js  WordPress address (the one switch for going live)
+    ga-shop.js       product data, cart, cart drawer, grid + product page
+  data/
+    products.json    mock catalogue in the WooCommerce Store API shape
   fonts/             woff2 / ttf font files
   media/             every image, SVG and video, in the original folder layout
+wordpress/           WordPress-side plugin (reference copy, blocked from being served)
 sourcecode/          the original page sources (git-ignored, reference only)
 ```
+
+## Shop (headless WooCommerce)
+
+The client manages products in WordPress + WooCommerce; this site is the
+storefront. Checkout stays on WooCommerce's own checkout page.
+
+```
+mykitchencorner.in  (this repo)          WordPress + WooCommerce
+  /products/  /product/<slug>/   <-- GET /wp-json/wc/store/v1/products
+  cart (localStorage) + drawer
+  "Checkout"  ---->  /wp-admin/admin-post.php?action=kc_cart&items=101:2,104:1
+                                           mu-plugin fills the cart
+                                           -> WooCommerce checkout + payment
+```
+
+- **Mock mode (now).** `wpBase` in `assets/js/ga-shop-config.js` is empty, so
+  products load from `assets/data/products.json`. Prices and descriptions in
+  that file are placeholders. Everything works except Checkout, which shows a
+  "store not connected" message.
+- **Going live.**
+  1. Install WooCommerce, add the products (simple products), set up payments
+     (e.g. Razorpay), shipping and tax.
+  2. Upload `wordpress/kc-cart-handoff.php` to `wp-content/mu-plugins/` on the
+     WordPress site.
+  3. Set `wpBase` in `ga-shop-config.js` to the WordPress URL, then bump
+     `?v=1` on the `ga-shop-config.js` / `ga-shop.js` tags in every page
+     (static assets are cached for a year).
+- **Cart.** Stored in the visitor's browser and synced across tabs. Every
+  time products load, names, prices and stock are refreshed from the store.
+  WooCommerce recalculates the real totals at checkout, so the storefront
+  never decides the price.
+- **After an order**, the thank-you page's "Continue shopping" link goes to
+  `/products/?order=placed`, which clears the storefront cart.
+- **Not yet supported:** variable products (sizes/weights), coupons in the
+  drawer, customer accounts. Out-of-stock products show but can't be added.
+- **Locally**, product links use `/product/?slug=…` because
+  `python -m http.server` can't do the `.htaccess` rewrite.
 
 ## SEO
 
@@ -126,4 +174,5 @@ on Apache/Hostinger.
 ## Deploying
 
 The `main` branch is the document root. Upload the repository contents (minus
-`sourcecode/`) to `public_html/` on Hostinger, keeping `.htaccess` at the root.
+`sourcecode/`) to `public_html/` on Hostinger, keeping `.htaccess` at the root. `wordpress/`
+is denied by its own `.htaccess` and can be left out of the upload.

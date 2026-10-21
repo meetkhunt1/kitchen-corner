@@ -1,0 +1,522 @@
+[
+  {
+    "id": 101,
+    "name": "Ginger Garlic Paste",
+    "slug": "ginger-garlic-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/ginger-garlic-paste/",
+    "sku": "KC-101",
+    "short_description": "<p>The everyday base for curries, marinades and gravies - fresh ginger and garlic, ground smooth.</p>",
+    "description": "<p>The everyday base for curries, marinades and gravies - fresh ginger and garlic, ground smooth.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "9900",
+      "regular_price": "9900",
+      "sale_price": "9900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1001,
+        "src": "/assets/media/2025/11/DSC08307-copy-min-683x1024.jpg",
+        "thumbnail": "/assets/media/2025/11/DSC08307-copy-min-200x300.jpg",
+        "srcset": "/assets/media/2025/11/DSC08307-copy-min-200x300.jpg 200w, /assets/media/2025/11/DSC08307-copy-min-683x1024.jpg 683w, /assets/media/2025/11/DSC08307-copy-min-768x1152.jpg 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "DSC08307-copy-min.jpg",
+        "alt": "Ginger Garlic Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Ginger Garlic Paste” to your cart",
+      "url": "?add-to-cart=101",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 102,
+    "name": "Garlic Paste",
+    "slug": "garlic-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/garlic-paste/",
+    "sku": "KC-102",
+    "short_description": "<p>Pure garlic, ground to a smooth paste. No peeling, no chopping, no sticky fingers.</p>",
+    "description": "<p>Pure garlic, ground to a smooth paste. No peeling, no chopping, no sticky fingers.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "8900",
+      "regular_price": "8900",
+      "sale_price": "8900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1002,
+        "src": "/assets/media/2025/11/download-15-682x1024.png",
+        "thumbnail": "/assets/media/2025/11/download-15-200x300.png",
+        "srcset": "/assets/media/2025/11/download-15-200x300.png 200w, /assets/media/2025/11/download-15-682x1024.png 683w, /assets/media/2025/11/download-15-768x1153.png 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "download-15.png",
+        "alt": "Garlic Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Garlic Paste” to your cart",
+      "url": "?add-to-cart=102",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 103,
+    "name": "Ginger Paste",
+    "slug": "ginger-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/ginger-paste/",
+    "sku": "KC-103",
+    "short_description": "<p>Fresh ginger with its full bite, ready for tea, dal, stir-fries and curries.</p>",
+    "description": "<p>Fresh ginger with its full bite, ready for tea, dal, stir-fries and curries.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "8900",
+      "regular_price": "8900",
+      "sale_price": "8900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1003,
+        "src": "/assets/media/2025/11/download-17-682x1024.png",
+        "thumbnail": "/assets/media/2025/11/download-17-200x300.png",
+        "srcset": "/assets/media/2025/11/download-17-200x300.png 200w, /assets/media/2025/11/download-17-682x1024.png 683w, /assets/media/2025/11/download-17-768x1153.png 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "download-17.png",
+        "alt": "Ginger Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Ginger Paste” to your cart",
+      "url": "?add-to-cart=103",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 104,
+    "name": "Tikka Paste",
+    "slug": "tikka-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/tikka-paste/",
+    "sku": "KC-104",
+    "short_description": "<p>A spiced, tangy marinade for paneer, chicken or vegetable tikka - just coat and grill.</p>",
+    "description": "<p>A spiced, tangy marinade for paneer, chicken or vegetable tikka - just coat and grill.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": true,
+    "prices": {
+      "price": "12900",
+      "regular_price": "14900",
+      "sale_price": "12900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1004,
+        "src": "/assets/media/2025/11/DSC08275-copy-min-683x1024.jpg",
+        "thumbnail": "/assets/media/2025/11/DSC08275-copy-min-200x300.jpg",
+        "srcset": "/assets/media/2025/11/DSC08275-copy-min-200x300.jpg 200w, /assets/media/2025/11/DSC08275-copy-min-683x1024.jpg 683w, /assets/media/2025/11/DSC08275-copy-min-768x1152.jpg 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "DSC08275-copy-min.jpg",
+        "alt": "Tikka Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Tikka Paste” to your cart",
+      "url": "?add-to-cart=104",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 105,
+    "name": "Red Chilli Paste",
+    "slug": "red-chilli-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/red-chilli-paste/",
+    "sku": "KC-105",
+    "short_description": "<p>Deep red colour and steady heat for gravies, chutneys and snacks.</p>",
+    "description": "<p>Deep red colour and steady heat for gravies, chutneys and snacks.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "9900",
+      "regular_price": "9900",
+      "sale_price": "9900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1005,
+        "src": "/assets/media/2025/11/photo-4-683x1024.jpg",
+        "thumbnail": "/assets/media/2025/11/photo-4-200x300.jpg",
+        "srcset": "/assets/media/2025/11/photo-4-200x300.jpg 200w, /assets/media/2025/11/photo-4-683x1024.jpg 683w, /assets/media/2025/11/photo-4-768x1152.jpg 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "photo-4.jpg",
+        "alt": "Red Chilli Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Red Chilli Paste” to your cart",
+      "url": "?add-to-cart=105",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 106,
+    "name": "Green Chilli Paste",
+    "slug": "green-chilli-paste",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/green-chilli-paste/",
+    "sku": "KC-106",
+    "short_description": "<p>Sharp, fresh green chilli heat without the chopping.</p>",
+    "description": "<p>Sharp, fresh green chilli heat without the chopping.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "8900",
+      "regular_price": "8900",
+      "sale_price": "8900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1006,
+        "src": "/assets/media/2025/11/photo-2-683x1024.jpg",
+        "thumbnail": "/assets/media/2025/11/photo-2-200x300.jpg",
+        "srcset": "/assets/media/2025/11/photo-2-200x300.jpg 200w, /assets/media/2025/11/photo-2-683x1024.jpg 683w, /assets/media/2025/11/photo-2-768x1152.jpg 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "photo-2.jpg",
+        "alt": "Green Chilli Paste"
+      }
+    ],
+    "categories": [
+      {
+        "id": 15,
+        "name": "Pastes",
+        "slug": "pastes",
+        "link": "https://mykitchencorner.in/product-category/pastes/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": false,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Green Chilli Paste” to your cart",
+      "url": "?add-to-cart=106",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 107,
+    "name": "Schezwan Sauce",
+    "slug": "schezwan-sauce",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/schezwan-sauce/",
+    "sku": "KC-107",
+    "short_description": "<p>Fiery Indo-Chinese Schezwan sauce for fried rice, noodles and dips.</p>",
+    "description": "<p>Fiery Indo-Chinese Schezwan sauce for fried rice, noodles and dips.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": true,
+    "prices": {
+      "price": "14900",
+      "regular_price": "16900",
+      "sale_price": "14900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1007,
+        "src": "/assets/media/2025/11/download-16-683x1024.png",
+        "thumbnail": "/assets/media/2025/11/download-16-200x300.png",
+        "srcset": "/assets/media/2025/11/download-16-200x300.png 200w, /assets/media/2025/11/download-16-683x1024.png 683w, /assets/media/2025/11/download-16-768x1152.png 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "download-16.png",
+        "alt": "Schezwan Sauce"
+      }
+    ],
+    "categories": [
+      {
+        "id": 16,
+        "name": "Sauces",
+        "slug": "sauces",
+        "link": "https://mykitchencorner.in/product-category/sauces/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Schezwan Sauce” to your cart",
+      "url": "?add-to-cart=107",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  },
+  {
+    "id": 108,
+    "name": "Tamarind Date Chutney",
+    "slug": "tamarind-date-chutney",
+    "parent": 0,
+    "type": "simple",
+    "variation": "",
+    "permalink": "https://mykitchencorner.in/product/tamarind-date-chutney/",
+    "sku": "KC-108",
+    "short_description": "<p>Sweet-and-sour imli-khajur chutney for chaat, samosa and dahi vada.</p>",
+    "description": "<p>Sweet-and-sour imli-khajur chutney for chaat, samosa and dahi vada.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",
+    "on_sale": false,
+    "prices": {
+      "price": "11900",
+      "regular_price": "11900",
+      "sale_price": "11900",
+      "price_range": null,
+      "currency_code": "INR",
+      "currency_symbol": "₹",
+      "currency_minor_unit": 2,
+      "currency_decimal_separator": ".",
+      "currency_thousand_separator": ",",
+      "currency_prefix": "₹",
+      "currency_suffix": ""
+    },
+    "price_html": "",
+    "average_rating": "0",
+    "review_count": 0,
+    "images": [
+      {
+        "id": 1008,
+        "src": "/assets/media/2025/11/DSC08265-copy-min-683x1024.jpg",
+        "thumbnail": "/assets/media/2025/11/DSC08265-copy-min-200x300.jpg",
+        "srcset": "/assets/media/2025/11/DSC08265-copy-min-200x300.jpg 200w, /assets/media/2025/11/DSC08265-copy-min-683x1024.jpg 683w, /assets/media/2025/11/DSC08265-copy-min-768x1152.jpg 768w",
+        "sizes": "(max-width: 767px) 50vw, 25vw",
+        "name": "DSC08265-copy-min.jpg",
+        "alt": "Tamarind Date Chutney"
+      }
+    ],
+    "categories": [
+      {
+        "id": 17,
+        "name": "Chutneys",
+        "slug": "chutneys",
+        "link": "https://mykitchencorner.in/product-category/chutneys/"
+      }
+    ],
+    "tags": [],
+    "attributes": [],
+    "variations": [],
+    "has_options": false,
+    "is_purchasable": true,
+    "is_in_stock": true,
+    "is_on_backorder": false,
+    "low_stock_remaining": null,
+    "sold_individually": false,
+    "add_to_cart": {
+      "text": "Add to cart",
+      "description": "Add “Tamarind Date Chutney” to your cart",
+      "url": "?add-to-cart=108",
+      "minimum": 1,
+      "maximum": 99,
+      "multiple_of": 1
+    }
+  }
+]
