@@ -1,9 +1,97 @@
-﻿Type,SKU,Name,Published,Is featured?,Visibility in catalog,Short description,Description,Tax status,In stock?,Weight (kg),Allow customer reviews?,Sale price,Regular price,Categories,Images,Position
-simple,KC-101,Ginger Garlic Paste,1,0,visible,"<p>The everyday base for curries, marinades and gravies - fresh ginger and garlic, ground smooth.</p>","<p>The everyday base for curries, marinades and gravies - fresh ginger and garlic, ground smooth.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,99,Pastes,https://mykitchencorner.in/assets/media/2025/11/DSC08307-copy-min-scaled.jpg,1
-simple,KC-102,Garlic Paste,1,0,visible,"<p>Pure garlic, ground to a smooth paste. No peeling, no chopping, no sticky fingers.</p>","<p>Pure garlic, ground to a smooth paste. No peeling, no chopping, no sticky fingers.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,89,Pastes,https://mykitchencorner.in/assets/media/2025/11/download-15.png,2
-simple,KC-103,Ginger Paste,1,0,visible,"<p>Fresh ginger with its full bite, ready for tea, dal, stir-fries and curries.</p>","<p>Fresh ginger with its full bite, ready for tea, dal, stir-fries and curries.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,89,Pastes,https://mykitchencorner.in/assets/media/2025/11/download-17.png,3
-simple,KC-104,Tikka Paste,1,0,visible,"<p>A spiced, tangy marinade for paneer, chicken or vegetable tikka - just coat and grill.</p>","<p>A spiced, tangy marinade for paneer, chicken or vegetable tikka - just coat and grill.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,129,149,Pastes,https://mykitchencorner.in/assets/media/2025/11/DSC08275-copy-min-scaled.jpg,4
-simple,KC-105,Red Chilli Paste,1,0,visible,"<p>Deep red colour and steady heat for gravies, chutneys and snacks.</p>","<p>Deep red colour and steady heat for gravies, chutneys and snacks.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,99,Pastes,https://mykitchencorner.in/assets/media/2025/11/photo-4-scaled.jpg,5
-simple,KC-106,Green Chilli Paste,1,0,visible,"<p>Sharp, fresh green chilli heat without the chopping.</p>","<p>Sharp, fresh green chilli heat without the chopping.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,89,Pastes,https://mykitchencorner.in/assets/media/2025/11/photo-2-scaled.jpg,6
-simple,KC-107,Schezwan Sauce,1,0,visible,"<p>Fiery Indo-Chinese Schezwan sauce for fried rice, noodles and dips.</p>","<p>Fiery Indo-Chinese Schezwan sauce for fried rice, noodles and dips.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,149,169,Sauces,https://mykitchencorner.in/assets/media/2025/11/download-16.png,7
-simple,KC-108,Tamarind Date Chutney,1,0,visible,"<p>Sweet-and-sour imli-khajur chutney for chaat, samosa and dahi vada.</p>","<p>Sweet-and-sour imli-khajur chutney for chaat, samosa and dahi vada.</p><p>Made in small batches with real ingredients. No artificial colours. Refrigerate after opening and use a dry spoon.</p><ul><li>Net weight: 200 g</li><li>Shelf life: 6 months unopened</li><li>Storage: refrigerate after opening</li></ul>",taxable,1,0.2,0,,119,Chutneys,https://mykitchencorner.in/assets/media/2025/11/DSC08265-copy-min-scaled.jpg,8
+﻿Type,SKU,Name,Parent,Published,Is featured?,Visibility in catalog,Short description,Description,Tax status,In stock?,Weight (kg),Allow customer reviews?,Regular price,Categories,Images,Position,Attribute 1 name,Attribute 1 value(s),Attribute 1 visible,Attribute 1 global,Attribute 1 default
+variable,KC-GINGER-GARLIC-PASTE,Ginger Garlic Paste,,1,0,visible,"<p>The everyday base for curries, marinades and gravies.</p>",,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/DSC08307-copy-min-scaled-1.jpg,1,Size,"25 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GINGER-GARLIC-PASTE-25-G,Ginger Garlic Paste - 25 g,KC-GINGER-GARLIC-PASTE,1,,,,Pouch,none,1,0.025,,5,,,1,Size,25 g,,1,
+variation,KC-GINGER-GARLIC-PASTE-200-G,Ginger Garlic Paste - 200 g,KC-GINGER-GARLIC-PASTE,1,,,,Pouch,none,1,0.2,,50,,,2,Size,200 g,,1,
+variation,KC-GINGER-GARLIC-PASTE-500-G,Ginger Garlic Paste - 500 g,KC-GINGER-GARLIC-PASTE,1,,,,Plastic Jar,none,1,0.5,,100,,,3,Size,500 g,,1,
+variation,KC-GINGER-GARLIC-PASTE-1-KG,Ginger Garlic Paste - 1 kg,KC-GINGER-GARLIC-PASTE,1,,,,Plastic Jar,none,1,1,,210,,,4,Size,1 kg,,1,
+variation,KC-GINGER-GARLIC-PASTE-5-KG,Ginger Garlic Paste - 5 kg,KC-GINGER-GARLIC-PASTE,1,,,,Plastic Jar,none,1,5,,600,,,5,Size,5 kg,,1,
+variable,KC-GARLIC-PASTE,Garlic Paste,,1,0,visible,"<p>Smooth garlic paste - no peeling, no chopping.</p>",,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/download-15.png,2,Size,"25 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GARLIC-PASTE-25-G,Garlic Paste - 25 g,KC-GARLIC-PASTE,1,,,,Pouch,none,1,0.025,,5,,,1,Size,25 g,,1,
+variation,KC-GARLIC-PASTE-200-G,Garlic Paste - 200 g,KC-GARLIC-PASTE,1,,,,Pouch,none,1,0.2,,50,,,2,Size,200 g,,1,
+variation,KC-GARLIC-PASTE-500-G,Garlic Paste - 500 g,KC-GARLIC-PASTE,1,,,,Plastic Jar,none,1,0.5,,100,,,3,Size,500 g,,1,
+variation,KC-GARLIC-PASTE-1-KG,Garlic Paste - 1 kg,KC-GARLIC-PASTE,1,,,,Plastic Jar,none,1,1,,210,,,4,Size,1 kg,,1,
+variation,KC-GARLIC-PASTE-5-KG,Garlic Paste - 5 kg,KC-GARLIC-PASTE,1,,,,Plastic Jar,none,1,5,,600,,,5,Size,5 kg,,1,
+variable,KC-GINGER-PASTE,Ginger Paste,,1,0,visible,"<p>Ginger paste, ready for tea, dal, stir-fries and curries.</p>",,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/download-17.png,3,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GINGER-PASTE-500-G,Ginger Paste - 500 g,KC-GINGER-PASTE,1,,,,Plastic Jar,none,1,0.5,,100,,,1,Size,500 g,,1,
+variation,KC-GINGER-PASTE-1-KG,Ginger Paste - 1 kg,KC-GINGER-PASTE,1,,,,Plastic Jar,none,1,1,,210,,,2,Size,1 kg,,1,
+variation,KC-GINGER-PASTE-5-KG,Ginger Paste - 5 kg,KC-GINGER-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-TIKKA-PASTE,Tikka Paste,,1,0,visible,"<p>A spiced, tangy marinade for paneer, chicken or vegetable tikka.</p>",,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/DSC08275-copy-min-scaled-1.jpg,4,Size,"25 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-TIKKA-PASTE-25-G,Tikka Paste - 25 g,KC-TIKKA-PASTE,1,,,,Pouch,none,1,0.025,,10,,,1,Size,25 g,,1,
+variation,KC-TIKKA-PASTE-500-G,Tikka Paste - 500 g,KC-TIKKA-PASTE,1,,,,Plastic Jar,none,1,0.5,,150,,,2,Size,500 g,,1,
+variation,KC-TIKKA-PASTE-1-KG,Tikka Paste - 1 kg,KC-TIKKA-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,3,Size,1 kg,,1,
+variation,KC-TIKKA-PASTE-5-KG,Tikka Paste - 5 kg,KC-TIKKA-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,4,Size,5 kg,,1,
+variable,KC-RED-CHILLI-PASTE,Red Chilli Paste,,1,0,visible,"<p>Red chilli paste for colour and heat in gravies, chutneys and snacks.</p>",,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/photo-4-scaled-1.jpg,5,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-RED-CHILLI-PASTE-500-G,Red Chilli Paste - 500 g,KC-RED-CHILLI-PASTE,1,,,,Plastic Jar,none,1,0.5,,120,,,1,Size,500 g,,1,
+variation,KC-RED-CHILLI-PASTE-1-KG,Red Chilli Paste - 1 kg,KC-RED-CHILLI-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,2,Size,1 kg,,1,
+variation,KC-RED-CHILLI-PASTE-5-KG,Red Chilli Paste - 5 kg,KC-RED-CHILLI-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-GREEN-CHILLI-PASTE,Green Chilli Paste,,1,0,visible,<p>Green chilli paste - fresh heat without the chopping.</p>,,none,1,,0,,Pastes,https://store.mykitchencorner.in/wp-content/uploads/2026/09/photo-2-scaled-1.jpg,6,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GREEN-CHILLI-PASTE-500-G,Green Chilli Paste - 500 g,KC-GREEN-CHILLI-PASTE,1,,,,Plastic Jar,none,1,0.5,,120,,,1,Size,500 g,,1,
+variation,KC-GREEN-CHILLI-PASTE-1-KG,Green Chilli Paste - 1 kg,KC-GREEN-CHILLI-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,2,Size,1 kg,,1,
+variation,KC-GREEN-CHILLI-PASTE-5-KG,Green Chilli Paste - 5 kg,KC-GREEN-CHILLI-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-SCHEZWAN-SAUCE,Schezwan Sauce,,1,0,visible,"<p>Indo-Chinese Schezwan sauce for fried rice, noodles and dips.</p>",,none,1,,0,,Sauces,https://store.mykitchencorner.in/wp-content/uploads/2026/09/download-16.png,7,Size,"25 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-SCHEZWAN-SAUCE-25-G,Schezwan Sauce - 25 g,KC-SCHEZWAN-SAUCE,1,,,,Pouch,none,1,0.025,,10,,,1,Size,25 g,,1,
+variation,KC-SCHEZWAN-SAUCE-200-G,Schezwan Sauce - 200 g,KC-SCHEZWAN-SAUCE,1,,,,Pouch,none,1,0.2,,60,,,2,Size,200 g,,1,
+variation,KC-SCHEZWAN-SAUCE-500-G,Schezwan Sauce - 500 g,KC-SCHEZWAN-SAUCE,1,,,,Plastic Jar,none,1,0.5,,120,,,3,Size,500 g,,1,
+variation,KC-SCHEZWAN-SAUCE-1-KG,Schezwan Sauce - 1 kg,KC-SCHEZWAN-SAUCE,1,,,,Plastic Jar,none,1,1,,240,,,4,Size,1 kg,,1,
+variation,KC-SCHEZWAN-SAUCE-5-KG,Schezwan Sauce - 5 kg,KC-SCHEZWAN-SAUCE,1,,,,Plastic Jar,none,1,5,,900,,,5,Size,5 kg,,1,
+variable,KC-DATE-TAMARIND-CHUTNEY,Date Tamarind Chutney,,1,0,visible,"<p>Sweet-and-sour khajur imli chutney for chaat, samosa and dahi vada.</p>",,none,1,,0,,Chutneys,https://store.mykitchencorner.in/wp-content/uploads/2026/09/DSC08265-copy-min-scaled-1.jpg,8,Size,"200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-DATE-TAMARIND-CHUTNEY-200-G,Date Tamarind Chutney - 200 g,KC-DATE-TAMARIND-CHUTNEY,1,,,,Pouch,none,1,0.2,,60,,,1,Size,200 g,,1,
+variation,KC-DATE-TAMARIND-CHUTNEY-500-G,Date Tamarind Chutney - 500 g,KC-DATE-TAMARIND-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,2,Size,500 g,,1,
+variation,KC-DATE-TAMARIND-CHUTNEY-1-KG,Date Tamarind Chutney - 1 kg,KC-DATE-TAMARIND-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,3,Size,1 kg,,1,
+variation,KC-DATE-TAMARIND-CHUTNEY-5-KG,Date Tamarind Chutney - 5 kg,KC-DATE-TAMARIND-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,4,Size,5 kg,,1,
+variable,KC-ZESTY-GARLIC-PASTE,Zesty Garlic Paste,,1,0,visible,"<p>A bold, tangy garlic paste.</p>",,none,1,,0,,Pastes,,9,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-ZESTY-GARLIC-PASTE-500-G,Zesty Garlic Paste - 500 g,KC-ZESTY-GARLIC-PASTE,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-ZESTY-GARLIC-PASTE-1-KG,Zesty Garlic Paste - 1 kg,KC-ZESTY-GARLIC-PASTE,1,,,,Plastic Jar,none,1,1,,300,,,2,Size,1 kg,,1,
+variation,KC-ZESTY-GARLIC-PASTE-5-KG,Zesty Garlic Paste - 5 kg,KC-ZESTY-GARLIC-PASTE,1,,,,Plastic Jar,none,1,5,,1200,,,3,Size,5 kg,,1,
+variable,KC-TANDOORI-PASTE,Tandoori Paste,,1,0,visible,"<p>Tandoori marinade for paneer, chicken and vegetables.</p>",,none,1,,0,,Pastes,,10,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-TANDOORI-PASTE-500-G,Tandoori Paste - 500 g,KC-TANDOORI-PASTE,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-TANDOORI-PASTE-1-KG,Tandoori Paste - 1 kg,KC-TANDOORI-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,2,Size,1 kg,,1,
+variation,KC-TANDOORI-PASTE-5-KG,Tandoori Paste - 5 kg,KC-TANDOORI-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-VINDALOO-PASTE,Vindaloo Paste,,1,0,visible,<p>Vindaloo curry paste.</p>,,none,1,,0,,Pastes,,11,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-VINDALOO-PASTE-500-G,Vindaloo Paste - 500 g,KC-VINDALOO-PASTE,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-VINDALOO-PASTE-1-KG,Vindaloo Paste - 1 kg,KC-VINDALOO-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,2,Size,1 kg,,1,
+variation,KC-VINDALOO-PASTE-5-KG,Vindaloo Paste - 5 kg,KC-VINDALOO-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-PANI-PURI-PASTE,Pani Puri Paste,,1,0,visible,<p>Pani puri paste - mix with water for tangy pani.</p>,,none,1,,0,,Pastes,,12,Size,"100 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-PANI-PURI-PASTE-100-G,Pani Puri Paste - 100 g,KC-PANI-PURI-PASTE,1,,,,Pouch,none,1,0.1,,40,,,1,Size,100 g,,1,
+variation,KC-PANI-PURI-PASTE-500-G,Pani Puri Paste - 500 g,KC-PANI-PURI-PASTE,1,,,,Plastic Jar,none,1,0.5,,120,,,2,Size,500 g,,1,
+variation,KC-PANI-PURI-PASTE-1-KG,Pani Puri Paste - 1 kg,KC-PANI-PURI-PASTE,1,,,,Plastic Jar,none,1,1,,240,,,3,Size,1 kg,,1,
+variation,KC-PANI-PURI-PASTE-5-KG,Pani Puri Paste - 5 kg,KC-PANI-PURI-PASTE,1,,,,Plastic Jar,none,1,5,,900,,,4,Size,5 kg,,1,
+variable,KC-GARLIC-CHUTNEY,Garlic Chutney,,1,0,visible,"<p>Garlic chutney for chaat, vada pav and snacks.</p>",,none,1,,0,,Chutneys,,13,Size,"80 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GARLIC-CHUTNEY-80-G,Garlic Chutney - 80 g,KC-GARLIC-CHUTNEY,1,,,,Plastic Daba,none,1,0.08,,30,,,1,Size,80 g,,1,
+variation,KC-GARLIC-CHUTNEY-200-G,Garlic Chutney - 200 g,KC-GARLIC-CHUTNEY,1,,,,Plastic Daba,none,1,0.2,,60,,,2,Size,200 g,,1,
+variation,KC-GARLIC-CHUTNEY-500-G,Garlic Chutney - 500 g,KC-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,3,Size,500 g,,1,
+variation,KC-GARLIC-CHUTNEY-1-KG,Garlic Chutney - 1 kg,KC-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,4,Size,1 kg,,1,
+variation,KC-GARLIC-CHUTNEY-5-KG,Garlic Chutney - 5 kg,KC-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,5,Size,5 kg,,1,
+variable,KC-GREEN-CHUTNEY,Green Chutney,,1,0,visible,"<p>Green chutney for sandwiches, chaat and snacks.</p>",,none,1,,0,,Chutneys,,14,Size,"80 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GREEN-CHUTNEY-80-G,Green Chutney - 80 g,KC-GREEN-CHUTNEY,1,,,,Plastic Daba,none,1,0.08,,30,,,1,Size,80 g,,1,
+variation,KC-GREEN-CHUTNEY-200-G,Green Chutney - 200 g,KC-GREEN-CHUTNEY,1,,,,Plastic Daba,none,1,0.2,,60,,,2,Size,200 g,,1,
+variation,KC-GREEN-CHUTNEY-500-G,Green Chutney - 500 g,KC-GREEN-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,3,Size,500 g,,1,
+variation,KC-GREEN-CHUTNEY-1-KG,Green Chutney - 1 kg,KC-GREEN-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,4,Size,1 kg,,1,
+variation,KC-GREEN-CHUTNEY-5-KG,Green Chutney - 5 kg,KC-GREEN-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,5,Size,5 kg,,1,
+variable,KC-FARALI-JAIN-CHUTNEY,Farali Jain Chutney,,1,0,visible,<p>Farali Jain chutney.</p>,,none,1,,0,,Chutneys,,15,Size,"80 g, 200 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-FARALI-JAIN-CHUTNEY-80-G,Farali Jain Chutney - 80 g,KC-FARALI-JAIN-CHUTNEY,1,,,,Plastic Daba,none,1,0.08,,30,,,1,Size,80 g,,1,
+variation,KC-FARALI-JAIN-CHUTNEY-200-G,Farali Jain Chutney - 200 g,KC-FARALI-JAIN-CHUTNEY,1,,,,Plastic Daba,none,1,0.2,,60,,,2,Size,200 g,,1,
+variation,KC-FARALI-JAIN-CHUTNEY-500-G,Farali Jain Chutney - 500 g,KC-FARALI-JAIN-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,3,Size,500 g,,1,
+variation,KC-FARALI-JAIN-CHUTNEY-1-KG,Farali Jain Chutney - 1 kg,KC-FARALI-JAIN-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,4,Size,1 kg,,1,
+variation,KC-FARALI-JAIN-CHUTNEY-5-KG,Farali Jain Chutney - 5 kg,KC-FARALI-JAIN-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,5,Size,5 kg,,1,
+variable,KC-ALL-IN-ONE-CHUTNEY,All in One Chutney,,1,0,visible,"<p>One chutney for chaat, snacks and sandwiches.</p>",,none,1,,0,,Chutneys,,16,Size,"100 g, 500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-ALL-IN-ONE-CHUTNEY-100-G,All in One Chutney - 100 g,KC-ALL-IN-ONE-CHUTNEY,1,,,,Pouch,none,1,0.1,,40,,,1,Size,100 g,,1,
+variation,KC-ALL-IN-ONE-CHUTNEY-500-G,All in One Chutney - 500 g,KC-ALL-IN-ONE-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,2,Size,500 g,,1,
+variation,KC-ALL-IN-ONE-CHUTNEY-1-KG,All in One Chutney - 1 kg,KC-ALL-IN-ONE-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,3,Size,1 kg,,1,
+variation,KC-ALL-IN-ONE-CHUTNEY-5-KG,All in One Chutney - 5 kg,KC-ALL-IN-ONE-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,4,Size,5 kg,,1,
+variable,KC-GREEN-GARLIC-CHUTNEY,Green Garlic Chutney,,1,0,visible,<p>Green garlic chutney.</p>,,none,1,,0,,Chutneys,,17,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-GREEN-GARLIC-CHUTNEY-500-G,Green Garlic Chutney - 500 g,KC-GREEN-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-GREEN-GARLIC-CHUTNEY-1-KG,Green Garlic Chutney - 1 kg,KC-GREEN-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,1,,300,,,2,Size,1 kg,,1,
+variation,KC-GREEN-GARLIC-CHUTNEY-5-KG,Green Garlic Chutney - 5 kg,KC-GREEN-GARLIC-CHUTNEY,1,,,,Plastic Jar,none,1,5,,1200,,,3,Size,5 kg,,1,
+variable,KC-SCHEZWAN-CHUTNEY,Schezwan Chutney,,1,0,visible,<p>Schezwan chutney.</p>,,none,1,,0,,Chutneys,,18,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-SCHEZWAN-CHUTNEY-500-G,Schezwan Chutney - 500 g,KC-SCHEZWAN-CHUTNEY,1,,,,Plastic Jar,none,1,0.5,,120,,,1,Size,500 g,,1,
+variation,KC-SCHEZWAN-CHUTNEY-1-KG,Schezwan Chutney - 1 kg,KC-SCHEZWAN-CHUTNEY,1,,,,Plastic Jar,none,1,1,,240,,,2,Size,1 kg,,1,
+variation,KC-SCHEZWAN-CHUTNEY-5-KG,Schezwan Chutney - 5 kg,KC-SCHEZWAN-CHUTNEY,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-SWEET-CHILLY-SAUCE,Sweet Chilly Sauce,,1,0,visible,"<p>Sweet chilli sauce for dips, rolls and stir-fries.</p>",,none,1,,0,,Sauces,,19,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-SWEET-CHILLY-SAUCE-500-G,Sweet Chilly Sauce - 500 g,KC-SWEET-CHILLY-SAUCE,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-SWEET-CHILLY-SAUCE-1-KG,Sweet Chilly Sauce - 1 kg,KC-SWEET-CHILLY-SAUCE,1,,,,Plastic Jar,none,1,1,,280,,,2,Size,1 kg,,1,
+variation,KC-SWEET-CHILLY-SAUCE-5-KG,Sweet Chilly Sauce - 5 kg,KC-SWEET-CHILLY-SAUCE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,
+variable,KC-PIZZA-PASTA-SAUCE,Pizza Pasta Sauce,,1,0,visible,<p>Pizza and pasta sauce.</p>,,none,1,,0,,Sauces,,20,Size,"500 g, 1 kg, 5 kg",1,1,500 g
+variation,KC-PIZZA-PASTA-SAUCE-500-G,Pizza Pasta Sauce - 500 g,KC-PIZZA-PASTA-SAUCE,1,,,,Plastic Jar,none,1,0.5,,150,,,1,Size,500 g,,1,
+variation,KC-PIZZA-PASTA-SAUCE-1-KG,Pizza Pasta Sauce - 1 kg,KC-PIZZA-PASTA-SAUCE,1,,,,Plastic Jar,none,1,1,,300,,,2,Size,1 kg,,1,
+variation,KC-PIZZA-PASTA-SAUCE-5-KG,Pizza Pasta Sauce - 5 kg,KC-PIZZA-PASTA-SAUCE,1,,,,Plastic Jar,none,1,5,,900,,,3,Size,5 kg,,1,

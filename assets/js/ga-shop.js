@@ -87,9 +87,42 @@
     var slug = encodeURIComponent(p.slug);
     return LOCAL ? "/product/?slug=" + slug : "/product/" + slug + "/";
   }
-  // Only simple products can be bought from the storefront for now.
+  // A simple product, or one size (variation) of a variable product, goes in
+  // the cart - never the variable product itself.
   function buyable(p) {
-    return !!(p && p.is_purchasable && p.is_in_stock && (p.type || "simple") === "simple");
+    var type = (p && p.type) || "simple";
+    return !!(p && p.is_purchasable && p.is_in_stock && (type === "simple" || type === "variation"));
+  }
+
+  // Sizes of a variable product (attached by Store), smallest first; null
+  // for simple products.
+  function variantsOf(p) {
+    return p.type === "variable" ? p.kcVariants || [] : null;
+  }
+  // The size a product opens on: the configured preferred size if it is in
+  // stock, else the first size in stock, else the first size.
+  function defaultVariant(p) {
+    var vs = variantsOf(p);
+    if (!vs || !vs.length) return null;
+    var pool = vs.filter(buyable);
+    if (!pool.length) pool = vs;
+    var pref = String(CONFIG.preferredSize || "").toLowerCase();
+    for (var i = 0; i < pool.length; i++) if (pool[i].kcLabel.toLowerCase() === pref) return pool[i];
+    return pool[0];
+  }
+  function inStock(p) {
+    var vs = variantsOf(p);
+    return vs ? vs.some(buyable) : !!p.is_in_stock;
+  }
+  // "500 g" -> 500, "1 kg" -> 1000; unknown labels sort last.
+  function grams(label) {
+    var m = /([\d.]+)\s*(kg|gm?|ml|l)\b/i.exec(label || "");
+    if (!m) return Infinity;
+    var n = parseFloat(m[1]);
+    return /^(kg|l)$/i.test(m[2]) ? n * 1000 : n;
+  }
+  function placeholderHTML() {
+    return '<div class="ga-noimg"><img src="/assets/media/2025/11/kc-1-1.png" alt="" width="234" height="85" loading="lazy" decoding="async"></div>';
   }
   function maxQty(p) {
     var m = p && p.add_to_cart && p.add_to_cart.maximum;
@@ -105,8 +138,10 @@
      2. Catalogue (Store API or mock)
      ---------------------------------------------------------- */
   var Store = (function () {
+    var API = WP_BASE + "/wp-json/wc/store/v1/products";
     var request = null;
     var list = [];
+    var index = {}; // id -> product or variation
 
     function getJSON(url) {
       return fetch(url, { headers: { Accept: "application/json" } }).then(function (r) {
@@ -114,15 +149,84 @@
         return r.json();
       });
     }
+    // Every page of a Store API listing.
+    function getAll(url) {
+      var out = [];
+      function page(n) {
+        return getJSON(url + "&per_page=100&page=" + n).then(function (data) {
+          out = out.concat(Array.isArray(data) ? data : []);
+          return data.length === 100 ? page(n + 1) : out;
+        });
+      }
+      return page(1);
+    }
+
+    // Size names come from the parent's attribute terms ("500-g" -> "500 g").
+    function sizeLabels(p) {
+      var names = {};
+      (p.attributes || []).forEach(function (a) {
+        (a.terms || []).forEach(function (t) {
+          names[t.slug] = text(t.name);
+        });
+      });
+      var out = {};
+      (p.variations || []).forEach(function (v) {
+        out[v.id] = (v.attributes || [])
+          .map(function (a) {
+            return names[a.value] || text(a.value);
+          })
+          .join(" / ");
+      });
+      return out;
+    }
+
+    function attach(parents, variations) {
+      var byParent = {};
+      variations.forEach(function (v) {
+        (byParent[v.parent] = byParent[v.parent] || []).push(v);
+      });
+      parents.forEach(function (p) {
+        if (p.type !== "variable") return;
+        var labels = sizeLabels(p);
+        p.kcVariants = (byParent[p.id] || [])
+          .map(function (v) {
+            v.kcParent = p;
+            v.kcLabel = labels[v.id] || text(String(v.variation || "").replace(/^[^:]*:\s*/, "")) || text(v.name);
+            v.kcPack = stripTags(v.description);
+            return v;
+          })
+          .sort(function (a, b) {
+            return grams(a.kcLabel) - grams(b.kcLabel);
+          });
+      });
+    }
+
+    function load() {
+      if (!LIVE) return getJSON(CONFIG.mockUrl || "/assets/data/products.json");
+      return getAll(API + "?orderby=menu_order&order=asc").then(function (parents) {
+        var anyVariable = parents.some(function (p) {
+          return p.type === "variable";
+        });
+        if (!anyVariable) return parents;
+        return getAll(API + "?type=variation").then(function (variations) {
+          attach(parents, variations);
+          return parents;
+        });
+      });
+    }
 
     function products() {
       if (!request) {
-        var url = LIVE
-          ? WP_BASE + "/wp-json/wc/store/v1/products?per_page=100&orderby=menu_order&order=asc"
-          : CONFIG.mockUrl || "/assets/data/products.json";
-        request = getJSON(url).then(
+        request = load().then(
           function (data) {
             list = Array.isArray(data) ? data : [];
+            index = {};
+            list.forEach(function (p) {
+              index[p.id] = p;
+              (p.kcVariants || []).forEach(function (v) {
+                index[v.id] = v;
+              });
+            });
             return list;
           },
           function (err) {
@@ -135,9 +239,7 @@
     }
 
     function byId(id) {
-      id = Number(id);
-      for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
-      return null;
+      return index[Number(id)] || null;
     }
 
     function bySlug(slug) {
@@ -178,11 +280,14 @@
       for (var i = 0; i < items.length; i++) if (items[i].id === id) return items[i];
       return null;
     }
+    // p is a simple product or a variation (one size of its kcParent).
     function snapshot(p, item) {
-      var img = (p.images && p.images[0]) || {};
+      var parent = p.kcParent || p;
+      var img = (p.images && p.images[0]) || (parent.images && parent.images[0]) || {};
       item.id = p.id;
-      item.slug = p.slug;
-      item.name = text(p.name);
+      item.slug = parent.slug;
+      item.name = text(parent.name);
+      item.variant = p.kcLabel || "";
       item.price = p.prices.price;
       item.currency = currencyOf(p.prices);
       item.image = img.thumbnail || img.src || "";
@@ -229,19 +334,15 @@
         items = [];
         save();
       },
-      // Refresh names, prices and stock from the latest catalogue;
-      // drop products that no longer exist.
-      refresh: function (products) {
+      // Refresh names, prices and stock from the latest catalogue (lookup
+      // maps an id to a product or size); drop ones that no longer exist.
+      refresh: function (lookup) {
         if (!items.length) return;
-        var byId = {};
-        products.forEach(function (p) {
-          byId[p.id] = p;
-        });
         items = items.filter(function (i) {
-          return byId[i.id];
+          return lookup(i.id);
         });
         items.forEach(function (i) {
-          snapshot(byId[i.id], i);
+          snapshot(lookup(i.id), i);
         });
         save();
       },
@@ -342,10 +443,11 @@
             return (
               '<li class="ga-cart-item' + (i.available ? "" : " ga-is-oos") + '" data-id="' + i.id + '">' +
                 '<a class="ga-cart-thumb" href="' + url + '">' +
-                  (i.image ? '<img src="' + esc(i.image) + '" alt="" width="200" height="300" loading="lazy" decoding="async">' : "") +
+                  (i.image ? '<img src="' + esc(i.image) + '" alt="" width="200" height="300" loading="lazy" decoding="async">' : placeholderHTML()) +
                 "</a>" +
                 '<div class="ga-cart-info">' +
                   '<a class="ga-cart-name" href="' + url + '">' + esc(i.name) + "</a>" +
+                  (i.variant ? '<span class="ga-cart-variant">' + esc(i.variant) + "</span>" : "") +
                   '<span class="ga-cart-unit">' + money(i.price, i.currency) + "</span>" +
                   (i.available
                     ? '<div class="ga-qty ga-qty--sm">' +
@@ -505,15 +607,43 @@
   /* ----------------------------------------------------------
      6. Product cards
      ---------------------------------------------------------- */
+  // Button state for the selected product/size: [enabled, label].
+  function addState(u, inStockAtAll) {
+    if (u && buyable(u)) return [true, "Add to cart"];
+    return [false, (u ? u.is_in_stock : inStockAtAll) ? "Unavailable" : "Out of stock"];
+  }
+
+  function sizeOptionsHTML(p, sel) {
+    return variantsOf(p)
+      .map(function (v) {
+        return (
+          '<option value="' + v.id + '"' + (v === sel ? " selected" : "") + ">" +
+            esc(v.kcLabel) + " – " + money(v.prices.price, currencyOf(v.prices)) +
+            (buyable(v) ? "" : " (out of stock)") +
+          "</option>"
+        );
+      })
+      .join("");
+  }
+
   function cardHTML(p, i) {
     var img = (p.images && p.images[0]) || {};
     var url = productUrl(p);
-    var ok = buyable(p);
-    var cls = "ga-pcard" + (p.is_in_stock ? "" : " ga-is-oos");
-    var badge = !p.is_in_stock
+    var vs = variantsOf(p);
+    var sel = vs ? defaultVariant(p) : p; // what "Add to cart" adds
+    var stocked = inStock(p);
+    var st = addState(sel, stocked);
+    var cls = "ga-pcard" + (stocked ? "" : " ga-is-oos");
+    var badge = !stocked
       ? '<span class="ga-badge ga-badge--muted">Out of stock</span>'
-      : p.on_sale
+      : sel && sel.on_sale
         ? '<span class="ga-badge">Sale</span>'
+        : "";
+    var sizePicker = vs && vs.length > 1
+      ? '<label class="ga-sr-only" for="ga-size-' + p.id + '">Size for ' + esc(p.name) + "</label>" +
+        '<select class="ga-pcard-size" id="ga-size-' + p.id + '" data-ga-size>' + sizeOptionsHTML(p, sel) + "</select>"
+      : vs && sel
+        ? '<span class="ga-pcard-onesize">' + esc(sel.kcLabel) + "</span>"
         : "";
     return (
       '<article class="' + cls + '">' +
@@ -524,7 +654,7 @@
                 (img.srcset ? ' srcset="' + esc(img.srcset) + '" sizes="(max-width: 767px) 50vw, 25vw"' : "") +
                 ' alt="' + esc(img.alt || p.name) + '" width="683" height="1024" decoding="async"' +
                 (i > 3 ? ' loading="lazy"' : "") + ">"
-              : "") +
+              : placeholderHTML()) +
           "</div>" +
           '<div class="ga-pcard-foot">' +
             "<h2>" + esc(p.name) + "</h2>" +
@@ -532,14 +662,33 @@
           "</div>" +
         "</a>" +
         '<div class="ga-pcard-buy">' +
-          priceHTML(p) +
-          '<button type="button" class="ga-pcard-add" data-ga-add="' + p.id + '"' +
-            (ok ? ' aria-label="Add ' + esc(p.name) + ' to cart"' : " disabled") + ">" +
-            (ok ? "Add to cart" : p.is_in_stock ? "Unavailable" : "Out of stock") +
+          '<div class="ga-pcard-opts">' +
+            '<span class="ga-pcard-price">' + (sel ? priceHTML(sel) : "") + "</span>" +
+            sizePicker +
+          "</div>" +
+          '<button type="button" class="ga-pcard-add" data-ga-add="' + (sel ? sel.id : p.id) + '"' +
+            ' aria-label="Add ' + esc(p.name) + ' to cart"' + (st[0] ? "" : " disabled") + ">" + st[1] +
           "</button>" +
         "</div>" +
       "</article>"
     );
+  }
+
+  // Switching size on a card updates its price and what its button adds.
+  function initCardSizes() {
+    document.addEventListener("change", function (e) {
+      var select = e.target.closest && e.target.closest("[data-ga-size]");
+      if (!select) return;
+      var card = select.closest(".ga-pcard");
+      var v = Store.byId(select.value);
+      if (!card || !v) return;
+      var st = addState(v, inStock(v.kcParent));
+      var btn = card.querySelector("[data-ga-add]");
+      btn.setAttribute("data-ga-add", v.id);
+      btn.disabled = !st[0];
+      btn.textContent = st[1];
+      card.querySelector(".ga-pcard-price").innerHTML = priceHTML(v);
+    });
   }
 
   function skeletonHTML(n) {
@@ -572,7 +721,7 @@
       grid.innerHTML = skeletonHTML(8);
       Store.products().then(
         function (list) {
-          Cart.refresh(list);
+          Cart.refresh(Store.byId);
           grid.setAttribute("aria-busy", "false");
           grid.innerHTML = list.length
             ? list.map(cardHTML).join("")
@@ -620,7 +769,14 @@
     set('meta[property="og:url"]', "content", url);
     set('meta[property="og:image"]', "content", img);
 
-    var cur = currencyOf(p.prices);
+    var units = variantsOf(p) || [p];
+    var amount = function (u) {
+      var cur = currencyOf(u.prices);
+      return Number(u.prices.price) / Math.pow(10, cur.unit);
+    };
+    var amounts = units.map(amount);
+    var availability = inStock(p) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+    var currency = (units[0] && units[0].prices.currency_code) || "INR";
     var ld = document.createElement("script");
     ld.type = "application/ld+json";
     ld.textContent = JSON.stringify({
@@ -632,34 +788,50 @@
       sku: p.sku || undefined,
       url: url,
       brand: { "@type": "Brand", name: "Kitchen Corner" },
-      offers: {
-        "@type": "Offer",
-        url: url,
-        priceCurrency: p.prices.currency_code || "INR",
-        price: (Number(p.prices.price) / Math.pow(10, cur.unit)).toFixed(cur.unit),
-        availability: p.is_in_stock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
-      }
+      offers: units.length > 1
+        ? {
+            "@type": "AggregateOffer",
+            url: url,
+            priceCurrency: currency,
+            lowPrice: Math.min.apply(null, amounts).toFixed(2),
+            highPrice: Math.max.apply(null, amounts).toFixed(2),
+            offerCount: units.length,
+            availability: availability
+          }
+        : {
+            "@type": "Offer",
+            url: url,
+            priceCurrency: currency,
+            price: (amounts[0] || 0).toFixed(2),
+            availability: availability
+          }
     });
     document.head.appendChild(ld);
   }
 
+  function stockHTML(u, inStockAtAll) {
+    return (u ? u.is_in_stock : inStockAtAll)
+      ? "In stock"
+      : '<span class="ga-is-oos">Out of stock</span>';
+  }
+
   function productHTML(p) {
     var imgs = p.images && p.images.length ? p.images : [{}];
-    var ok = buyable(p);
+    var vs = variantsOf(p);
+    var sel = vs ? defaultVariant(p) : p; // what "Add to cart" adds
+    var stocked = inStock(p);
+    var st = addState(sel, stocked);
     var cat = p.categories && p.categories[0];
-    var stock = p.is_in_stock
-      ? '<p class="ga-pdp-stock">In stock</p>'
-      : '<p class="ga-pdp-stock ga-is-oos">Out of stock</p>';
 
     var gallery =
       '<div class="ga-pdp-gallery">' +
         '<div class="ga-pdp-main">' +
-          (p.on_sale && p.is_in_stock ? '<span class="ga-badge">Sale</span>' : "") +
+          (sel && sel.on_sale && stocked ? '<span class="ga-badge">Sale</span>' : "") +
           (imgs[0].src
             ? '<img src="' + esc(imgs[0].src) + '"' +
               (imgs[0].srcset ? ' srcset="' + esc(imgs[0].srcset) + '" sizes="(max-width: 767px) 100vw, 50vw"' : "") +
               ' alt="' + esc(imgs[0].alt || p.name) + '" width="683" height="1024" fetchpriority="high" decoding="async">'
-            : "") +
+            : placeholderHTML()) +
         "</div>" +
         (imgs.length > 1
           ? '<div class="ga-pdp-thumbs" role="list">' +
@@ -677,17 +849,37 @@
           : "") +
       "</div>";
 
-    var buy = ok
-      ? '<div class="ga-pdp-buy">' +
-          '<div class="ga-qty">' +
-            '<button type="button" data-ga-pdp-step="-1" aria-label="Decrease quantity">&minus;</button>' +
-            '<input id="ga-pdp-qty" type="number" inputmode="numeric" min="1" max="' + maxQty(p) + '" value="1" aria-label="Quantity">' +
-            '<button type="button" data-ga-pdp-step="1" aria-label="Increase quantity">+</button>' +
+    var sizes = vs && vs.length
+      ? '<div class="ga-pdp-sizes">' +
+          '<p class="ga-pdp-label" id="ga-size-label">Size</p>' +
+          '<div class="ga-sizes" role="radiogroup" aria-labelledby="ga-size-label">' +
+          vs
+            .map(function (v) {
+              var on = v === sel;
+              return (
+                '<button type="button" role="radio" class="ga-size' + (buyable(v) ? "" : " ga-is-oos") +
+                  '" data-ga-variant="' + v.id + '" aria-checked="' + on + '" tabindex="' + (on ? 0 : -1) + '">' +
+                  esc(v.kcLabel) +
+                "</button>"
+              );
+            })
+            .join("") +
           "</div>" +
-          '<button type="button" class="ga-btn ga-pdp-add" data-ga-add="' + p.id + '" data-ga-qty-from="#ga-pdp-qty">Add to cart</button>' +
+          '<p class="ga-pdp-pack"' + (sel && sel.kcPack ? "" : " hidden") + ">Packaging: <span>" +
+            esc(sel ? sel.kcPack : "") + "</span></p>" +
         "</div>"
-      : '<div class="ga-pdp-buy"><button type="button" class="ga-btn ga-pdp-add" disabled>' +
-          (p.is_in_stock ? "Unavailable" : "Out of stock") + "</button></div>";
+      : "";
+
+    var buy =
+      '<div class="ga-pdp-buy">' +
+        '<div class="ga-qty">' +
+          '<button type="button" data-ga-pdp-step="-1" aria-label="Decrease quantity">&minus;</button>' +
+          '<input id="ga-pdp-qty" type="number" inputmode="numeric" min="1" max="' + maxQty(sel) + '" value="1" aria-label="Quantity">' +
+          '<button type="button" data-ga-pdp-step="1" aria-label="Increase quantity">+</button>' +
+        "</div>" +
+        '<button type="button" class="ga-btn ga-pdp-add" data-ga-add="' + (sel ? sel.id : p.id) + '" data-ga-qty-from="#ga-pdp-qty"' +
+          (st[0] ? "" : " disabled") + ">" + st[1] + "</button>" +
+      "</div>";
 
     return (
       '<nav class="ga-crumbs" aria-label="Breadcrumb">' +
@@ -700,9 +892,10 @@
         '<div class="ga-pdp-info">' +
           (cat ? '<p class="ga-pdp-cat">' + esc(cat.name) + "</p>" : "") +
           '<h1 class="ga-pdp-title">' + esc(p.name) + "</h1>" +
-          '<div class="ga-pdp-price">' + priceHTML(p) + "</div>" +
-          stock +
+          '<div class="ga-pdp-price">' + (sel ? priceHTML(sel) : "") + "</div>" +
+          '<p class="ga-pdp-stock">' + stockHTML(sel, stocked) + "</p>" +
           (p.short_description ? '<div class="ga-pdp-short">' + p.short_description + "</div>" : "") +
+          sizes +
           buy +
           (p.description
             ? '<div class="ga-pdp-desc"><h2>Details</h2>' + p.description + "</div>"
@@ -732,14 +925,56 @@
       var step = e.target.closest("[data-ga-pdp-step]");
       if (step) {
         var input = root.querySelector("#ga-pdp-qty");
-        input.value = clampQty(Number(input.value) + Number(step.getAttribute("data-ga-pdp-step")), maxQty(p));
+        input.value = clampQty(Number(input.value) + Number(step.getAttribute("data-ga-pdp-step")), maxQty(current()));
       }
+      var size = e.target.closest("[data-ga-variant]");
+      if (size) selectSize(size);
+    });
+    // Arrow keys move between sizes (radio group behaviour).
+    root.addEventListener("keydown", function (e) {
+      var size = e.target.closest && e.target.closest("[data-ga-variant]");
+      if (!size || !/^Arrow(Left|Right|Up|Down)$/.test(e.key)) return;
+      e.preventDefault();
+      var all = Array.prototype.slice.call(root.querySelectorAll("[data-ga-variant]"));
+      var n = all.indexOf(size) + (/Right|Down/.test(e.key) ? 1 : -1);
+      var next = all[(n + all.length) % all.length];
+      selectSize(next);
+      next.focus();
     });
     var qty = root.querySelector("#ga-pdp-qty");
     if (qty) {
       qty.addEventListener("change", function () {
-        qty.value = clampQty(qty.value, maxQty(p));
+        qty.value = clampQty(qty.value, maxQty(current()));
       });
+    }
+
+    // The product or size the Add button currently adds.
+    function current() {
+      var btn = root.querySelector(".ga-pdp-add");
+      return (btn && Store.byId(btn.getAttribute("data-ga-add"))) || p;
+    }
+
+    function selectSize(btnSize) {
+      var v = Store.byId(btnSize.getAttribute("data-ga-variant"));
+      if (!v) return;
+      Array.prototype.forEach.call(root.querySelectorAll("[data-ga-variant]"), function (b) {
+        var on = b === btnSize;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+      var st = addState(v, inStock(p));
+      var add = root.querySelector(".ga-pdp-add");
+      add.setAttribute("data-ga-add", v.id);
+      add.disabled = !st[0];
+      add.textContent = st[1];
+      root.querySelector(".ga-pdp-price").innerHTML = priceHTML(v);
+      root.querySelector(".ga-pdp-stock").innerHTML = stockHTML(v, inStock(p));
+      var pack = root.querySelector(".ga-pdp-pack");
+      pack.hidden = !v.kcPack;
+      pack.querySelector("span").textContent = v.kcPack || "";
+      var input = root.querySelector("#ga-pdp-qty");
+      input.max = maxQty(v);
+      input.value = clampQty(input.value, maxQty(v));
     }
   }
 
@@ -779,7 +1014,7 @@
       root.setAttribute("aria-busy", "true");
       Store.products().then(
         function (list) {
-          Cart.refresh(list);
+          Cart.refresh(Store.byId);
           root.setAttribute("aria-busy", "false");
           var p = slug && Store.bySlug(slug);
           if (!p) return notFound();
@@ -822,6 +1057,7 @@
     initOrderReturn();
     Drawer.init();
     initAddButtons();
+    initCardSizes();
     initGrid();
     initProduct();
   });

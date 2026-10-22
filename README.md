@@ -88,7 +88,7 @@ mykitchencorner.in  (this repo)          WordPress + WooCommerce
   "store not connected" message.
 - **Going live.**
   1. Install WooCommerce, add the products (simple products), set up payments
-     (e.g. Razorpay), shipping and tax.
+     (PhonePe), shipping and tax.
   2. Upload `wordpress/kc-cart-handoff.php` to `wp-content/mu-plugins/` on the
      WordPress site.
   3. Set `wpBase` in `ga-shop-config.js` to the WordPress URL, then bump
@@ -100,8 +100,15 @@ mykitchencorner.in  (this repo)          WordPress + WooCommerce
   never decides the price.
 - **After an order**, the thank-you page's "Continue shopping" link goes to
   `/products/?order=placed`, which clears the storefront cart.
-- **Not yet supported:** variable products (sizes/weights), coupons in the
-  drawer, customer accounts. Out-of-stock products show but can't be added.
+- **Sizes.** Products with sizes are WooCommerce *variable* products with a
+  global **Size** attribute. Cards get a size dropdown, product pages get size
+  buttons plus the size's packaging (the variation description). A product
+  opens on `preferredSize` from `ga-shop-config.js` ("500 g"). Each size is
+  its own cart line; the handoff passes the variation id.
+- **Catalogue import.** `wordpress/products-import.csv` holds the full price
+  list (20 products, 76 sizes, MRP incl. GST) for WooCommerce's CSV importer.
+- **Not yet supported:** coupons in the drawer, customer accounts.
+  Out-of-stock products and sizes show but can't be added.
 - **Locally**, product links use `/product/?slug=…` because
   `python -m http.server` can't do the `.htaccess` rewrite.
 

@@ -8,6 +8,10 @@ window.GA_SHOP_CONFIG = {
   // mock catalogue below (checkout is disabled in that mode).
   wpBase: "https://store.mykitchencorner.in",
 
+  // Size a product opens on when it comes in several sizes (must match the
+  // size name in WooCommerce). Falls back to the first size in stock.
+  preferredSize: "500 g",
+
   // Mock catalogue in the WooCommerce Store API response shape.
   mockUrl: "/assets/data/products.json"
 };
