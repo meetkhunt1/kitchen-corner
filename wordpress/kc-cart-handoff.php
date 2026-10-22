@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - cart handoff
  * Description: Receives the cart from the mykitchencorner.in storefront, fills the WooCommerce cart and opens checkout. Sends the store's own shop/product pages back to the storefront.
- * Version:     1.3.0
+ * Version:     1.4.0
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -99,32 +99,115 @@ add_filter( 'woocommerce_return_to_shop_redirect', function () {
 } );
 
 /*
- * Unpaid orders.
- * WooCommerce creates the order before the shopper pays. If the payment is
- * cancelled, fails or never starts, the gateway sends the shopper to the
- * order page, which asks guests to log in. Instead, send the shopper who
- * placed the order back to "Pay for order" with a clear message, and cancel
- * orders that stay unpaid.
+ * Shopify-style checkout.
+ * WooCommerce has to create the order before the shopper pays - the payment
+ * gateway charges against it. Until it is paid it is treated as a checkout,
+ * not an order:
+ * - unpaid attempts are kept out of Orders > All, under "Abandoned checkout";
+ * - a shopper who comes back without paying (cancelled, failed, closed the
+ *   payment page) lands on checkout again with the cart refilled;
+ * - a payment confirmed late still completes the order and sends the emails.
  */
-const KC_UNPAID_COOKIE  = 'kc_unpaid_order';
-const KC_UNPAID_MINUTES = 30;
+const KC_ABANDONED       = 'abandoned'; // stored as wc-abandoned
+const KC_CHECKOUT_COOKIE = 'kc_checkout_order';
+const KC_UNPAID_MINUTES  = 30;
 
-function kc_remember_unpaid_order( $order ) {
-	$order = $order instanceof WC_Order ? $order : wc_get_order( $order );
-	if ( $order ) {
-		wc_setcookie( KC_UNPAID_COOKIE, $order->get_id() . ':' . $order->get_order_key(), time() + DAY_IN_SECONDS, true, true );
+add_filter( 'woocommerce_register_shop_order_post_statuses', function ( $statuses ) {
+	foreach ( array( 'wc-pending', 'wc-failed' ) as $status ) {
+		if ( isset( $statuses[ $status ] ) ) {
+			$statuses[ $status ]['show_in_admin_all_list'] = false;
+		}
+	}
+	$statuses[ 'wc-' . KC_ABANDONED ] = array(
+		'label'                     => _x( 'Abandoned checkout', 'Order status', 'kitchen-corner' ),
+		'public'                    => false,
+		'exclude_from_search'       => false,
+		'show_in_admin_all_list'    => false,
+		'show_in_admin_status_list' => true,
+		/* translators: %s: number of orders */
+		'label_count'               => _n_noop( 'Abandoned checkout <span class="count">(%s)</span>', 'Abandoned checkouts <span class="count">(%s)</span>', 'kitchen-corner' ),
+	);
+	return $statuses;
+} );
+
+add_filter( 'wc_order_statuses', function ( $statuses ) {
+	$statuses[ 'wc-' . KC_ABANDONED ] = _x( 'Abandoned checkout', 'Order status', 'kitchen-corner' );
+	return $statuses;
+} );
+
+// A payment confirmed after the checkout was abandoned still completes it.
+add_filter( 'woocommerce_valid_order_statuses_for_payment_complete', function ( $statuses ) {
+	$statuses[] = KC_ABANDONED;
+	return $statuses;
+} );
+add_filter( 'woocommerce_valid_order_statuses_for_payment', function ( $statuses ) {
+	$statuses[] = KC_ABANDONED;
+	return $statuses;
+} );
+
+// WooCommerce only emails on pending/failed -> paid; cover abandoned -> paid too.
+add_action( 'woocommerce_order_status_changed', function ( $order_id, $from, $to ) {
+	if ( KC_ABANDONED !== $from || ! in_array( $to, array( 'processing', 'on-hold' ), true ) ) {
+		return;
+	}
+	$emails   = WC()->mailer()->get_emails();
+	$customer = 'processing' === $to ? 'WC_Email_Customer_Processing_Order' : 'WC_Email_Customer_On_Hold_Order';
+	foreach ( array( 'WC_Email_New_Order', $customer ) as $class ) {
+		if ( isset( $emails[ $class ] ) ) {
+			$emails[ $class ]->trigger( $order_id );
+		}
+	}
+}, 10, 3 );
+
+// Moves an unpaid checkout order out of the order list.
+function kc_abandon( WC_Order $order, $note ) {
+	if ( $order->is_paid() || $order->get_date_paid() ) {
+		return;
+	}
+	if ( ! in_array( $order->get_created_via(), array( 'checkout', 'store-api' ), true ) ) {
+		return; // orders created by hand in wp-admin are left alone
+	}
+	if ( $order->has_status( array( 'pending', 'failed', 'cancelled' ) ) ) {
+		$order->update_status( KC_ABANDONED, $note );
 	}
 }
-add_action( 'woocommerce_store_api_checkout_order_processed', 'kc_remember_unpaid_order' );
-add_action( 'woocommerce_checkout_order_processed', 'kc_remember_unpaid_order' );
 
-// Only the browser that placed the order is sent on to pay for it.
+// The gateway cancelling an unpaid order is an abandoned checkout, not an order.
+add_action( 'woocommerce_order_status_cancelled', function ( $order_id, $order ) {
+	kc_abandon( $order, 'Payment cancelled - moved to abandoned checkouts.' );
+}, 20, 2 );
+
+// Remember which order this browser placed, so only its shopper gets the cart back.
+function kc_remember_checkout_order( $order ) {
+	$order = $order instanceof WC_Order ? $order : wc_get_order( $order );
+	if ( $order ) {
+		wc_setcookie( KC_CHECKOUT_COOKIE, $order->get_id() . ':' . $order->get_order_key(), time() + DAY_IN_SECONDS, true, true );
+	}
+}
+add_action( 'woocommerce_store_api_checkout_order_processed', 'kc_remember_checkout_order' );
+add_action( 'woocommerce_checkout_order_processed', 'kc_remember_checkout_order' );
+
 function kc_is_shoppers_order( WC_Order $order ) {
-	$raw = isset( $_COOKIE[ KC_UNPAID_COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ KC_UNPAID_COOKIE ] ) ) : '';
+	$raw = isset( $_COOKIE[ KC_CHECKOUT_COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ KC_CHECKOUT_COOKIE ] ) ) : '';
 	list( $id, $key ) = array_pad( explode( ':', $raw, 2 ), 2, '' );
 	return absint( $id ) === $order->get_id() && '' !== $key && hash_equals( $order->get_order_key(), $key );
 }
 
+function kc_refill_cart( WC_Order $order ) {
+	if ( ! WC()->cart ) {
+		return;
+	}
+	WC()->cart->empty_cart();
+	foreach ( $order->get_items() as $item ) {
+		$product = $item->get_product();
+		if ( $product && $product->is_purchasable() ) {
+			WC()->cart->add_to_cart( $item->get_product_id(), $item->get_quantity(), $item->get_variation_id() );
+		}
+	}
+}
+
+// Back from the payment page without paying: return to checkout, cart intact.
+// Runs late so the gateway's own return handler can record a payment first.
 add_action( 'template_redirect', function () {
 	if ( ! function_exists( 'is_wc_endpoint_url' ) ) {
 		return;
@@ -137,32 +220,52 @@ add_action( 'template_redirect', function () {
 		return;
 	}
 	$order = $order_id ? wc_get_order( $order_id ) : false;
-	if ( ! $order || ! $order->needs_payment() || ! kc_is_shoppers_order( $order ) ) {
+	if ( ! $order || $order->is_paid() || $order->has_status( 'on-hold' ) || ! kc_is_shoppers_order( $order ) ) {
 		return;
 	}
-	wc_add_notice( __( 'Your payment was not completed, so the order has not been placed yet. Please try the payment again below.', 'kitchen-corner' ), 'error' );
-	wp_safe_redirect( $order->get_checkout_payment_url() );
+	kc_abandon( $order, 'Shopper returned without completing payment - moved to abandoned checkouts.' );
+	kc_refill_cart( $order );
+	wp_safe_redirect( add_query_arg( 'kc_payment', 'incomplete', wc_get_checkout_url() ) );
 	exit;
-}, 5 );
+}, 100 );
 
-// Cancel checkout orders left unpaid, so the order list only shows real orders.
+// Message at the top of checkout after an unfinished payment.
+add_filter( 'render_block', function ( $html, $block ) {
+	if ( 'woocommerce/checkout' !== $block['blockName'] || empty( $_GET['kc_payment'] ) ) {
+		return $html;
+	}
+	$message = __( 'Your payment was not completed, so no order was placed. Your cart is saved - please try again.', 'kitchen-corner' );
+	return '<div class="kc-payment-notice" role="alert" style="margin:0 0 24px;padding:14px 18px;border:1px solid #e0b4b4;border-radius:8px;background:#fdf3f3;color:#8a1f1f;font-size:15px;">'
+		. esc_html( $message ) . '</div>' . $html;
+}, 10, 2 );
+
+// Every 15 minutes: unpaid checkouts older than 30 minutes, and unpaid ones
+// the gateway cancelled, move to abandoned checkouts.
 add_action( 'init', function () {
-	if ( function_exists( 'as_has_scheduled_action' ) && ! as_has_scheduled_action( 'kc_cancel_unpaid_orders' ) ) {
-		as_schedule_recurring_action( time() + 5 * MINUTE_IN_SECONDS, 15 * MINUTE_IN_SECONDS, 'kc_cancel_unpaid_orders', array(), 'kitchen-corner' );
+	if ( ! function_exists( 'as_has_scheduled_action' ) ) {
+		return;
+	}
+	if ( as_has_scheduled_action( 'kc_cancel_unpaid_orders' ) ) {
+		as_unschedule_all_actions( 'kc_cancel_unpaid_orders' ); // replaced by the job below (v1.3.0)
+	}
+	if ( ! as_has_scheduled_action( 'kc_abandon_unpaid_orders' ) ) {
+		as_schedule_recurring_action( time() + MINUTE_IN_SECONDS, 15 * MINUTE_IN_SECONDS, 'kc_abandon_unpaid_orders', array(), 'kitchen-corner' );
 	}
 } );
 
-add_action( 'kc_cancel_unpaid_orders', function () {
-	$orders = wc_get_orders( array(
-		'status'       => 'pending',
+add_action( 'kc_abandon_unpaid_orders', function () {
+	$stale     = wc_get_orders( array(
+		'status'       => array( 'pending', 'failed' ),
 		'date_created' => '<' . ( time() - KC_UNPAID_MINUTES * MINUTE_IN_SECONDS ),
-		'limit'        => 50,
+		'limit'        => 100,
 	) );
-	foreach ( $orders as $order ) {
-		// Leave orders created by hand in wp-admin alone.
-		if ( in_array( $order->get_created_via(), array( 'checkout', 'store-api' ), true ) ) {
-			$order->update_status( 'cancelled', sprintf( 'Not paid within %d minutes - cancelled automatically.', KC_UNPAID_MINUTES ) );
-		}
+	$cancelled = wc_get_orders( array(
+		'status'       => 'cancelled',
+		'date_created' => '>' . ( time() - 30 * DAY_IN_SECONDS ),
+		'limit'        => 100,
+	) );
+	foreach ( array_merge( $stale, $cancelled ) as $order ) {
+		kc_abandon( $order, 'Not paid - moved to abandoned checkouts.' );
 	}
 } );
 
