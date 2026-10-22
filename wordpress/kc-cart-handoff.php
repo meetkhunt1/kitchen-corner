@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - cart handoff
  * Description: Receives the cart from the mykitchencorner.in storefront, fills the WooCommerce cart and opens checkout. Sends the store's own shop/product pages back to the storefront.
- * Version:     1.2.0
+ * Version:     1.3.0
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -96,6 +96,74 @@ add_action( 'template_redirect', function () {
 // "Return to shop" links (empty cart, etc.) go back to the storefront.
 add_filter( 'woocommerce_return_to_shop_redirect', function () {
 	return KC_STOREFRONT_URL . '/products/';
+} );
+
+/*
+ * Unpaid orders.
+ * WooCommerce creates the order before the shopper pays. If the payment is
+ * cancelled, fails or never starts, the gateway sends the shopper to the
+ * order page, which asks guests to log in. Instead, send the shopper who
+ * placed the order back to "Pay for order" with a clear message, and cancel
+ * orders that stay unpaid.
+ */
+const KC_UNPAID_COOKIE  = 'kc_unpaid_order';
+const KC_UNPAID_MINUTES = 30;
+
+function kc_remember_unpaid_order( $order ) {
+	$order = $order instanceof WC_Order ? $order : wc_get_order( $order );
+	if ( $order ) {
+		wc_setcookie( KC_UNPAID_COOKIE, $order->get_id() . ':' . $order->get_order_key(), time() + DAY_IN_SECONDS, true, true );
+	}
+}
+add_action( 'woocommerce_store_api_checkout_order_processed', 'kc_remember_unpaid_order' );
+add_action( 'woocommerce_checkout_order_processed', 'kc_remember_unpaid_order' );
+
+// Only the browser that placed the order is sent on to pay for it.
+function kc_is_shoppers_order( WC_Order $order ) {
+	$raw = isset( $_COOKIE[ KC_UNPAID_COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ KC_UNPAID_COOKIE ] ) ) : '';
+	list( $id, $key ) = array_pad( explode( ':', $raw, 2 ), 2, '' );
+	return absint( $id ) === $order->get_id() && '' !== $key && hash_equals( $order->get_order_key(), $key );
+}
+
+add_action( 'template_redirect', function () {
+	if ( ! function_exists( 'is_wc_endpoint_url' ) ) {
+		return;
+	}
+	if ( is_wc_endpoint_url( 'view-order' ) ) {
+		$order_id = absint( get_query_var( 'view-order' ) );
+	} elseif ( is_wc_endpoint_url( 'order-received' ) ) {
+		$order_id = absint( get_query_var( 'order-received' ) );
+	} else {
+		return;
+	}
+	$order = $order_id ? wc_get_order( $order_id ) : false;
+	if ( ! $order || ! $order->needs_payment() || ! kc_is_shoppers_order( $order ) ) {
+		return;
+	}
+	wc_add_notice( __( 'Your payment was not completed, so the order has not been placed yet. Please try the payment again below.', 'kitchen-corner' ), 'error' );
+	wp_safe_redirect( $order->get_checkout_payment_url() );
+	exit;
+}, 5 );
+
+// Cancel checkout orders left unpaid, so the order list only shows real orders.
+add_action( 'init', function () {
+	if ( function_exists( 'as_has_scheduled_action' ) && ! as_has_scheduled_action( 'kc_cancel_unpaid_orders' ) ) {
+		as_schedule_recurring_action( time() + 5 * MINUTE_IN_SECONDS, 15 * MINUTE_IN_SECONDS, 'kc_cancel_unpaid_orders', array(), 'kitchen-corner' );
+	}
+} );
+
+add_action( 'kc_cancel_unpaid_orders', function () {
+	$orders = wc_get_orders( array(
+		'status'       => 'pending',
+		'date_created' => '<' . ( time() - KC_UNPAID_MINUTES * MINUTE_IN_SECONDS ),
+		'limit'        => 50,
+	) );
+	foreach ( $orders as $order ) {
+		// Leave orders created by hand in wp-admin alone.
+		if ( in_array( $order->get_created_via(), array( 'checkout', 'store-api' ), true ) ) {
+			$order->update_status( 'cancelled', sprintf( 'Not paid within %d minutes - cancelled automatically.', KC_UNPAID_MINUTES ) );
+		}
+	}
 } );
 
 // After a successful order, offer a way back that also clears the storefront cart.
