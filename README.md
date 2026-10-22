@@ -19,6 +19,7 @@ so nothing that ranks today changes address.
 | `/our-founders-journey/` | `our-founders-journey/index.html` |
 | `/products/` | `products/index.html` |
 | `/product/<slug>/` | `product/index.html` (one template for every product) |
+| `/order-confirmed/` | `order-confirmed/index.html` (thank-you page after payment, noindex) |
 | `/contact-us/` | `contact-us/index.html` |
 | `/privacy-policy/` | `privacy-policy/index.html` |
 | `/terms-conditions/` | `terms-conditions/index.html` |
@@ -98,8 +99,13 @@ mykitchencorner.in  (this repo)          WordPress + WooCommerce
   time products load, names, prices and stock are refreshed from the store.
   WooCommerce recalculates the real totals at checkout, so the storefront
   never decides the price.
-- **After an order**, the thank-you page's "Continue shopping" link goes to
-  `/products/?order=placed`, which clears the storefront cart.
+- **After payment** the plugin sends the shopper from WooCommerce's
+  order-received page to `/order-confirmed/?order=placed&n=<number>&t=<total>`
+  (thank-you message, order number, total, "Shop more"); `order=placed`
+  clears the storefront cart.
+- **Unpaid attempts** (cancelled, failed, or the gateway would not start)
+  return the shopper to checkout with the cart refilled, and the order moves
+  to the "Abandoned checkout" status, which is hidden from Orders > All.
 - **Sizes.** Products with sizes are WooCommerce *variable* products with a
   global **Size** attribute. Cards get a size dropdown, product pages get size
   buttons plus the size's packaging (the variation description). A product

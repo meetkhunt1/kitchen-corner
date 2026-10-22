@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - cart handoff
  * Description: Receives the cart from the mykitchencorner.in storefront, fills the WooCommerce cart and opens checkout. Sends the store's own shop/product pages back to the storefront.
- * Version:     1.4.0
+ * Version:     1.5.0
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -206,21 +206,58 @@ function kc_refill_cart( WC_Order $order ) {
 	}
 }
 
-// Back from the payment page without paying: return to checkout, cart intact.
-// Runs late so the gateway's own return handler can record a payment first.
-add_action( 'template_redirect', function () {
-	if ( ! function_exists( 'is_wc_endpoint_url' ) ) {
-		return;
+/*
+ * Where the shopper lands after the payment page.
+ * - Paid: the storefront's thank-you page (order number, total, Shop more).
+ * - Not paid (cancelled, failed, or the gateway would not start the payment):
+ *   back to checkout with the cart refilled and one clear message.
+ * PhonePe's cancel and failure links point at checkout with ?phonepe_response,
+ * so those are matched to the shopper's order through the checkout cookie.
+ * Runs late, after the gateway's own return handler has recorded the payment.
+ */
+function kc_cookie_order_id() {
+	$raw = isset( $_COOKIE[ KC_CHECKOUT_COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ KC_CHECKOUT_COOKIE ] ) ) : '';
+	return absint( strtok( $raw, ':' ) );
+}
+
+function kc_order_from_request() {
+	if ( is_wc_endpoint_url( 'order-received' ) ) {
+		return wc_get_order( absint( get_query_var( 'order-received' ) ) );
 	}
 	if ( is_wc_endpoint_url( 'view-order' ) ) {
-		$order_id = absint( get_query_var( 'view-order' ) );
-	} elseif ( is_wc_endpoint_url( 'order-received' ) ) {
-		$order_id = absint( get_query_var( 'order-received' ) );
-	} else {
+		return wc_get_order( absint( get_query_var( 'view-order' ) ) );
+	}
+	if ( is_checkout() && isset( $_GET['phonepe_response'] ) ) {
+		$id = kc_cookie_order_id();
+		return $id ? wc_get_order( $id ) : false;
+	}
+	return false;
+}
+
+add_action( 'template_redirect', function () {
+	if ( ! function_exists( 'is_wc_endpoint_url' ) || is_wc_endpoint_url( 'order-pay' ) ) {
 		return;
 	}
-	$order = $order_id ? wc_get_order( $order_id ) : false;
-	if ( ! $order || $order->is_paid() || $order->has_status( 'on-hold' ) || ! kc_is_shoppers_order( $order ) ) {
+	$order = kc_order_from_request();
+	if ( ! $order ) {
+		return;
+	}
+
+	if ( $order->is_paid() || $order->has_status( 'on-hold' ) ) {
+		// Only the confirmation link itself (it carries the order key) moves on.
+		$key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : '';
+		if ( ! is_wc_endpoint_url( 'order-received' ) || '' === $key || ! hash_equals( $order->get_order_key(), $key ) ) {
+			return;
+		}
+		wp_safe_redirect( add_query_arg( array(
+			'order' => 'placed',
+			'n'     => rawurlencode( $order->get_order_number() ),
+			't'     => wc_format_decimal( $order->get_total(), 2 ),
+		), KC_STOREFRONT_URL . '/order-confirmed/' ) );
+		exit;
+	}
+
+	if ( ! kc_is_shoppers_order( $order ) ) {
 		return;
 	}
 	kc_abandon( $order, 'Shopper returned without completing payment - moved to abandoned checkouts.' );
@@ -268,12 +305,3 @@ add_action( 'kc_abandon_unpaid_orders', function () {
 		kc_abandon( $order, 'Not paid - moved to abandoned checkouts.' );
 	}
 } );
-
-// After a successful order, offer a way back that also clears the storefront cart.
-add_action( 'woocommerce_thankyou', function () {
-	printf(
-		'<p><a class="button" href="%s">%s</a></p>',
-		esc_url( KC_STOREFRONT_URL . '/products/?order=placed' ),
-		esc_html__( 'Continue shopping', 'kitchen-corner' )
-	);
-}, 20 );

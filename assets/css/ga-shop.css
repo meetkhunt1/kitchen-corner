@@ -806,3 +806,86 @@ body.ga-cart-open .ga-cart {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ---------- order confirmed (thank-you) page ---------- */
+.ga-confirm {
+  background-color: #f8fff1;
+}
+.ga-confirm-inner {
+  justify-content: center;
+  padding-block: 150px 80px;
+}
+.ga-confirm-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 620px;
+  padding: 48px 40px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(33, 88, 54, 0.08);
+  font-family: var(--ga-font);
+  text-align: center;
+}
+.ga-confirm-icon {
+  color: var(--ga-accent);
+}
+.ga-confirm-icon svg {
+  width: 72px;
+  height: 72px;
+}
+.ga-confirm-title {
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ga-green-deep);
+}
+.ga-confirm-meta {
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: #eef7e7;
+  font-size: 16px;
+  color: var(--ga-ink);
+}
+.ga-confirm-meta[hidden],
+.ga-confirm-meta [hidden] {
+  display: none;
+}
+.ga-confirm-text {
+  max-width: 480px;
+  font-size: 17px;
+  color: var(--ga-body-text);
+}
+.ga-confirm-cta {
+  margin-top: 8px;
+  padding: 16px 44px;
+  border-radius: 100px;
+  font-size: 17px;
+  font-weight: 500;
+}
+.ga-confirm-help {
+  font-size: 14px;
+  color: #6b6b6b;
+}
+.ga-confirm-help a {
+  color: var(--ga-green-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+@media (max-width: 767px) {
+  .ga-confirm-inner {
+    padding-block: 110px 40px;
+  }
+  .ga-confirm-card {
+    padding: 36px 20px;
+    border-radius: 14px;
+  }
+  .ga-confirm-title {
+    font-size: 28px;
+  }
+  .ga-confirm-cta {
+    width: 100%;
+  }
+}

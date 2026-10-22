@@ -1043,6 +1043,22 @@
   /* ----------------------------------------------------------
      9. Return from WooCommerce after a completed order
      ---------------------------------------------------------- */
+  // /order-confirmed/?order=placed&n=<order number>&t=<total in rupees>
+  function initOrderConfirm() {
+    var root = document.querySelector("[data-ga-order-confirm]");
+    if (!root) return;
+    var params = new URLSearchParams(window.location.search);
+    var number = params.get("n");
+    var total = parseFloat(params.get("t"));
+    if (!number) return;
+    root.querySelector("[data-ga-order-no]").textContent = "#" + number;
+    if (!isNaN(total)) {
+      root.querySelector("[data-ga-order-total]").textContent = money(Math.round(total * 100), currencyOf(null));
+      root.querySelector("[data-ga-order-total-wrap]").hidden = false;
+    }
+    root.querySelector("[data-ga-order-meta]").hidden = false;
+  }
+
   function initOrderReturn() {
     var params = new URLSearchParams(window.location.search);
     if (params.get("order") !== "placed") return;
@@ -1054,6 +1070,7 @@
 
   /* ---------------------------------------------------------- */
   ready(function () {
+    initOrderConfirm();
     initOrderReturn();
     Drawer.init();
     initAddButtons();
