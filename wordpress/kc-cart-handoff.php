@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - cart handoff
  * Description: Receives the cart from the mykitchencorner.in storefront, fills the WooCommerce cart and opens checkout. Sends the store's own shop/product pages back to the storefront.
- * Version:     1.5.0
+ * Version:     1.6.0
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -17,6 +17,18 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// Hostinger's CDN ends HTTPS before WordPress, so PHP sees plain HTTP and
+// WooCommerce ignores REST API keys (it only accepts them over HTTPS) - the
+// "Authentication error" Shiprocket reports. Trust the proxy's HTTPS header.
+if ( empty( $_SERVER['HTTPS'] ) || 'off' === strtolower( (string) $_SERVER['HTTPS'] ) ) {
+	$kc_proto = isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ? strtolower( trim( strtok( (string) $_SERVER['HTTP_X_FORWARDED_PROTO'], ',' ) ) ) : '';
+	$kc_ssl   = isset( $_SERVER['HTTP_X_FORWARDED_SSL'] ) ? strtolower( (string) $_SERVER['HTTP_X_FORWARDED_SSL'] ) : '';
+	if ( 'https' === $kc_proto || 'on' === $kc_ssl ) {
+		$_SERVER['HTTPS'] = 'on';
+	}
+	unset( $kc_proto, $kc_ssl );
+}
 
 // The customer-facing site.
 const KC_STOREFRONT_URL = 'https://mykitchencorner.in';
