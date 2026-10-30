@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - storefront bridge
  * Description: Connects the mykitchencorner.in storefront to WooCommerce (checkout through the Store API) and runs this site as a complete shop of its own, with its policy and contact pages.
- * Version:     2.1.0
+ * Version:     2.1.1
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -138,13 +138,28 @@ add_action( 'wp_footer', function () {
 } );
 
 /*
- * One-time store setup (runs once, then remembers it is done): publishes the
- * policy and contact pages if they don't exist yet, makes the Shop page the
- * homepage, and points WooCommerce's terms and WordPress's privacy settings
- * at the new pages so checkout links to them. Pages edited afterwards in
- * wp-admin are never overwritten.
+ * Store setup, run once per setup version, then remembered:
+ * - publishes the policy and contact pages if they don't exist yet; an
+ *   unpublished page at the same address (WordPress ships a draft "Privacy
+ *   Policy") is filled in and published;
+ * - creates a "Home" page listing all products and makes it the homepage
+ *   (themes with their own front-page layout ignore the Shop page there);
+ * - points WooCommerce's terms and WordPress's privacy settings at the new
+ *   pages so checkout links to them.
+ * Published pages edited afterwards in wp-admin are never overwritten.
  */
-const KC_SETUP_VERSION = '1';
+const KC_SETUP_VERSION = '2';
+
+// The theme's own homepage layout (front-page template) ignores the page set
+// as the homepage; show the homepage with the normal page template instead.
+add_filter( 'frontpage_template_hierarchy', function () {
+	return array();
+} );
+
+const KC_HOME_CONTENT = <<<'KCHTML'
+<p>Real ingredients, clean flavours and honest quality - ginger garlic paste, chutneys, sauces and more from Kitchen Corner, delivered across India. Choose a product to see its sizes and prices.</p>
+[products limit="60" columns="4" orderby="menu_order" order="ASC"]
+KCHTML;
 
 add_action( 'init', function () {
 	if ( KC_SETUP_VERSION === get_option( 'kc_store_setup' ) || ! function_exists( 'wc_get_page_id' ) ) {
@@ -153,26 +168,45 @@ add_action( 'init', function () {
 	$ids = array();
 	foreach ( kc_store_pages() as $page ) {
 		$existing = get_page_by_path( $page['slug'] );
-		if ( $existing ) {
+		if ( $existing && 'publish' === $existing->post_status ) {
 			$ids[ $page['slug'] ] = $existing->ID;
 			continue;
 		}
-		$id = wp_insert_post( array(
+		$args = array(
 			'post_type'    => 'page',
 			'post_status'  => 'publish',
 			'post_title'   => $page['title'],
 			'post_name'    => $page['slug'],
 			'post_content' => $page['content'],
-		), true );
+		);
+		if ( $existing ) {
+			$args['ID'] = $existing->ID;
+		}
+		$id = $existing ? wp_update_post( $args, true ) : wp_insert_post( $args, true );
 		if ( ! is_wp_error( $id ) ) {
 			$ids[ $page['slug'] ] = $id;
 		}
 	}
-	$shop = wc_get_page_id( 'shop' );
-	if ( $shop > 0 ) {
-		update_option( 'show_on_front', 'page' );
-		update_option( 'page_on_front', $shop );
+
+	$home = get_page_by_path( 'home' );
+	if ( ! $home ) {
+		$home_id = wp_insert_post( array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_title'   => 'Our Products',
+			'post_name'    => 'home',
+			'post_content' => KC_HOME_CONTENT,
+		), true );
+	} else {
+		$home_id = $home->ID;
 	}
+	// Only replace a homepage this plugin chose (latest posts, or the Shop page).
+	$front = (int) get_option( 'page_on_front' );
+	if ( ! is_wp_error( $home_id ) && ( 'page' !== get_option( 'show_on_front' ) || $front === wc_get_page_id( 'shop' ) || 0 === $front ) ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $home_id );
+	}
+
 	if ( ! empty( $ids['terms-conditions'] ) ) {
 		update_option( 'woocommerce_terms_page_id', $ids['terms-conditions'] );
 	}
