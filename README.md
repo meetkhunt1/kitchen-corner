@@ -87,7 +87,13 @@ mykitchencorner.in  (this repo)              store.mykitchencorner.in (WordPress
   /checkout/?payment=failed  <-------  cancelled / failed
 ```
 
-- **Mock mode (now).** `wpBase` in `assets/js/ga-shop-config.js` is empty, so
+- **Catalogue mode (live now).** `ordering: false` in
+  `assets/js/ga-shop-config.js` shows products, photos and sizes only: no
+  prices, cart icon, cart drawer or checkout (`/checkout/` sends visitors to
+  `/products/`), and product pages say online ordering is coming soon with a
+  link to Contact. Set `ordering: true` (and bump `?v=` on the shop scripts)
+  to open the shop.
+- **Mock mode.** `wpBase` in `assets/js/ga-shop-config.js` is empty, so
   products load from `assets/data/products.json`. Prices and descriptions in
   that file are placeholders. Everything works except Checkout, which shows a
   "store not connected" message.

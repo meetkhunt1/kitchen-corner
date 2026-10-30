@@ -11,6 +11,10 @@
   var CONFIG = window.GA_SHOP_CONFIG || {};
   var WP_BASE = (CONFIG.wpBase || "").replace(/\/+$/, "");
   var LIVE = !!WP_BASE;
+  // ordering: false turns the shop into a catalogue: products, photos and
+  // sizes, but no prices, cart or checkout (until online ordering launches).
+  var ORDERING = CONFIG.ordering !== false;
+  if (!ORDERING) document.documentElement.classList.add("ga-catalog");
   var CART_KEY = "ga-cart-v1";
 
   var ready = function (fn) {
@@ -627,7 +631,7 @@
     var cls = "ga-pcard" + (stocked ? "" : " ga-is-oos");
     var badge = !stocked
       ? '<span class="ga-badge ga-badge--muted">Out of stock</span>'
-      : sel && sel.on_sale
+      : ORDERING && sel && sel.on_sale
         ? '<span class="ga-badge">Sale</span>'
         : "";
     var sizePicker = vs && vs.length > 1
@@ -652,15 +656,19 @@
             '<div class="ga-pcard-icon"><span class="ga-icon">' + ARROW_SVG + "</span></div>" +
           "</div>" +
         "</a>" +
-        '<div class="ga-pcard-buy">' +
-          '<div class="ga-pcard-opts">' +
-            '<span class="ga-pcard-price">' + (sel ? priceHTML(sel) : "") + "</span>" +
-            sizePicker +
-          "</div>" +
-          '<button type="button" class="ga-pcard-add" data-ga-add="' + (sel ? sel.id : p.id) + '"' +
-            ' aria-label="Add ' + esc(p.name) + ' to cart"' + (st[0] ? "" : " disabled") + ">" + st[1] +
-          "</button>" +
-        "</div>" +
+        (ORDERING
+          ? '<div class="ga-pcard-buy">' +
+              '<div class="ga-pcard-opts">' +
+                '<span class="ga-pcard-price">' + (sel ? priceHTML(sel) : "") + "</span>" +
+                sizePicker +
+              "</div>" +
+              '<button type="button" class="ga-pcard-add" data-ga-add="' + (sel ? sel.id : p.id) + '"' +
+                ' aria-label="Add ' + esc(p.name) + ' to cart"' + (st[0] ? "" : " disabled") + ">" + st[1] +
+              "</button>" +
+            "</div>"
+          : vs && vs.length
+            ? '<p class="ga-pcard-sizes">' + esc(vs.length > 1 ? vs[0].kcLabel + " – " + vs[vs.length - 1].kcLabel : vs[0].kcLabel) + "</p>"
+            : "") +
       "</article>"
     );
   }
@@ -779,7 +787,9 @@
       sku: p.sku || undefined,
       url: url,
       brand: { "@type": "Brand", name: "Kitchen Corner" },
-      offers: units.length > 1
+      offers: !ORDERING
+        ? undefined
+        : units.length > 1
         ? {
             "@type": "AggregateOffer",
             url: url,
@@ -817,7 +827,7 @@
     var gallery =
       '<div class="ga-pdp-gallery">' +
         '<div class="ga-pdp-main">' +
-          (sel && sel.on_sale && stocked ? '<span class="ga-badge">Sale</span>' : "") +
+          (ORDERING && sel && sel.on_sale && stocked ? '<span class="ga-badge">Sale</span>' : "") +
           (imgs[0].src
             ? '<img src="' + esc(imgs[0].src) + '"' +
               (imgs[0].srcset ? ' srcset="' + esc(imgs[0].srcset) + '" sizes="(max-width: 767px) 100vw, 50vw"' : "") +
@@ -861,8 +871,27 @@
         "</div>"
       : "";
 
-    var buy =
-      '<div class="ga-pdp-buy">' +
+    if (!ORDERING) {
+      sizes = vs && vs.length
+        ? '<div class="ga-pdp-sizes">' +
+            '<p class="ga-pdp-label">Available sizes</p>' +
+            '<ul class="ga-sizes ga-sizes--list">' +
+            vs
+              .map(function (v) {
+                return '<li class="ga-size">' + esc(v.kcLabel) + (v.kcPack ? '<span class="ga-size-pack">' + esc(v.kcPack) + "</span>" : "") + "</li>";
+              })
+              .join("") +
+            "</ul>" +
+          "</div>"
+        : "";
+    }
+
+    var buy = !ORDERING
+      ? '<div class="ga-pdp-soon">' +
+          "<p><strong>Online ordering is coming soon.</strong> To order now, get in touch with us.</p>" +
+          '<a class="ga-btn" href="/contact-us/">Contact us</a>' +
+        "</div>"
+      : '<div class="ga-pdp-buy">' +
         '<div class="ga-qty">' +
           '<button type="button" data-ga-pdp-step="-1" aria-label="Decrease quantity">&minus;</button>' +
           '<input id="ga-pdp-qty" type="number" inputmode="numeric" min="1" max="' + maxQty(sel) + '" value="1" aria-label="Quantity">' +
@@ -883,8 +912,10 @@
         '<div class="ga-pdp-info">' +
           (cat ? '<p class="ga-pdp-cat">' + esc(cat.name) + "</p>" : "") +
           '<h1 class="ga-pdp-title">' + esc(p.name) + "</h1>" +
-          '<div class="ga-pdp-price">' + (sel ? priceHTML(sel) : "") + "</div>" +
-          '<p class="ga-pdp-stock">' + stockHTML(sel, stocked) + "</p>" +
+          (ORDERING
+            ? '<div class="ga-pdp-price">' + (sel ? priceHTML(sel) : "") + "</div>" +
+              '<p class="ga-pdp-stock">' + stockHTML(sel, stocked) + "</p>"
+            : "") +
           (p.short_description ? '<div class="ga-pdp-short">' + p.short_description + "</div>" : "") +
           sizes +
           buy +
@@ -1068,7 +1099,7 @@
   ready(function () {
     initOrderConfirm();
     initOrderReturn();
-    Drawer.init();
+    if (ORDERING) Drawer.init();
     initAddButtons();
     initCardSizes();
     initGrid();
@@ -1082,6 +1113,7 @@
     open: Drawer.open,
     apiBase: WP_BASE,
     live: LIVE,
+    ordering: ORDERING,
     esc: esc,
     text: text,
     money: money,

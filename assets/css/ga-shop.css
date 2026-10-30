@@ -889,3 +889,59 @@ body.ga-cart-open .ga-cart {
     width: 100%;
   }
 }
+
+/* ---------- catalogue mode (ordering: false in ga-shop-config.js) ---------- */
+.ga-catalog .ga-cart-btn {
+  display: none !important;
+}
+.ga-pcard-sizes {
+  margin-top: auto;
+  padding: 0 10px 10px;
+  font-family: var(--ga-font);
+  font-size: 15px;
+  color: #6b6b6b;
+}
+.ga-sizes--list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ga-sizes--list .ga-size {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: default;
+}
+.ga-sizes--list .ga-size:hover {
+  border-color: #c9d8bf;
+}
+.ga-size-pack {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6b6b6b;
+}
+.ga-pdp-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 22px;
+  border: 1px solid #dfe9d6;
+  border-radius: 14px;
+  background: #fff;
+}
+.ga-pdp-soon strong {
+  color: var(--ga-green-deep);
+}
+.ga-pdp-soon .ga-btn {
+  padding: 14px 30px;
+  border-radius: 100px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .ga-pcard-sizes {
+    padding: 0 0 10px;
+    font-size: 13px;
+  }
+}

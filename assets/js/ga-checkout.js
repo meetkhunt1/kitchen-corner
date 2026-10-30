@@ -13,6 +13,11 @@
   var root = document.querySelector("[data-ga-checkout-page]");
   var S = window.GaShop;
   if (!root || !S) return;
+  // Catalogue mode: there is nothing to check out yet.
+  if (S.ordering === false) {
+    window.location.replace("/products/");
+    return;
+  }
 
   var API = S.apiBase + "/wp-json/wc/store/v1";
   var TOKEN_KEY = "ga-cart-token"; // localStorage: lets the cart survive page loads (48 h)
