@@ -512,8 +512,13 @@
     }
     if (u.protocol !== "https:" && u.hostname !== "localhost") return "";
     var storeHost = new URL(S.apiBase).hostname;
-    var ok = u.hostname === storeHost || /(^|\.)phonepe\.com$/.test(u.hostname);
-    return ok ? u.href : "";
+    if (u.hostname === storeHost) {
+      // Tells the store this order came from the storefront, so the shopper
+      // is brought back here after paying (or not).
+      u.searchParams.set("kc_src", "storefront");
+      return u.href;
+    }
+    return /(^|\.)phonepe\.com$/.test(u.hostname) ? u.href : "";
   }
 
   function setBusy(on, label) {
