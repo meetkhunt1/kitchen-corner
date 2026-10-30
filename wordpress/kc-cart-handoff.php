@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Kitchen Corner - storefront bridge
  * Description: Connects the mykitchencorner.in storefront to WooCommerce: checkout runs on the storefront through the Store API, this site only takes payments and records orders.
- * Version:     2.0.0
+ * Version:     2.0.1
  *
  * Install: upload to wp-content/mu-plugins/ on the WordPress site
  * (create the folder if it does not exist). Must-use plugins load
@@ -128,7 +128,7 @@ add_action( 'template_redirect', function () {
 		wp_redirect( KC_STOREFRONT_CHECKOUT, 302 );
 		exit;
 	}
-}, 20 );
+}, 5 ); // before WooCommerce's own "empty cart" redirect (priority 10)
 
 // "Return to shop" links (empty cart, etc.) go back to the storefront.
 add_filter( 'woocommerce_return_to_shop_redirect', function () {
@@ -262,6 +262,30 @@ function kc_order_from_request() {
 	}
 	return false;
 }
+
+// PhonePe's cancel / failure links land on this site's checkout. The cart
+// here is empty (it lives on the storefront), so WooCommerce would bounce the
+// shopper to the cart page first and the message would be lost: handle these
+// before WooCommerce does (priority 1). Successful payments return through
+// PhonePe's own API callback and the order-received page, never this link.
+add_action( 'template_redirect', function () {
+	if ( ! function_exists( 'is_checkout' ) || ! is_checkout() || ! isset( $_GET['phonepe_response'] ) ) {
+		return;
+	}
+	if ( is_wc_endpoint_url( 'order-pay' ) || is_wc_endpoint_url( 'order-received' ) ) {
+		return;
+	}
+	$id    = kc_cookie_order_id();
+	$order = $id ? wc_get_order( $id ) : false;
+	if ( $order && ( $order->is_paid() || $order->has_status( 'on-hold' ) ) ) {
+		return;
+	}
+	if ( $order && kc_is_shoppers_order( $order ) ) {
+		kc_abandon( $order, 'Payment cancelled or failed - moved to abandoned checkouts.' );
+	}
+	wp_safe_redirect( add_query_arg( 'payment', 'failed', KC_STOREFRONT_CHECKOUT ) );
+	exit;
+}, 1 );
 
 add_action( 'template_redirect', function () {
 	if ( ! function_exists( 'is_wc_endpoint_url' ) || is_wc_endpoint_url( 'order-pay' ) ) {
