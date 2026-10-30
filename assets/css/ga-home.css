@@ -1522,3 +1522,8 @@
   line-height: 1;
   color: #000000;
 }
+
+/* accent word inside a heading ("Harvested with care.") */
+.ga-accent-text {
+  color: #72b539;
+}

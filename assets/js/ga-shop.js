@@ -12,8 +12,6 @@
   var WP_BASE = (CONFIG.wpBase || "").replace(/\/+$/, "");
   var LIVE = !!WP_BASE;
   var CART_KEY = "ga-cart-v1";
-  // Served by wordpress/kc-cart-handoff.php; admin-post.php is never page-cached.
-  var HANDOFF_URL = "/wp-admin/admin-post.php?action=kc_cart&items=";
 
   var ready = function (fn) {
     if (document.readyState !== "loading") fn();
@@ -491,20 +489,13 @@
     }
 
     function checkout() {
-      var lines = Cart.items()
-        .filter(function (i) {
-          return i.available;
-        })
-        .map(function (i) {
-          return i.id + ":" + i.qty;
-        });
-      if (!lines.length) return;
+      if (!Cart.count()) return;
       if (!LIVE) {
         msg.textContent = "Checkout opens once the online store is connected.";
         msg.hidden = false;
         return;
       }
-      window.location.href = WP_BASE + HANDOFF_URL + encodeURIComponent(lines.join(","));
+      window.location.href = "/checkout/";
     }
 
     function bind() {
@@ -1063,6 +1054,11 @@
     var params = new URLSearchParams(window.location.search);
     if (params.get("order") !== "placed") return;
     Cart.clear();
+    // The order is done: drop the checkout's cart token and saved details.
+    try {
+      localStorage.removeItem("ga-cart-token");
+      sessionStorage.removeItem("ga-checkout-form");
+    } catch (e) {}
     params.delete("order");
     var qs = params.toString();
     history.replaceState(null, "", window.location.pathname + (qs ? "?" + qs : "") + window.location.hash);
@@ -1079,5 +1075,18 @@
     initProduct();
   });
 
-  window.GaShop = { Store: Store, Cart: Cart, open: Drawer.open };
+  // Shared with ga-checkout.js.
+  window.GaShop = {
+    Store: Store,
+    Cart: Cart,
+    open: Drawer.open,
+    apiBase: WP_BASE,
+    live: LIVE,
+    esc: esc,
+    text: text,
+    money: money,
+    currencyOf: currencyOf,
+    productUrl: productUrl,
+    placeholderHTML: placeholderHTML
+  };
 })();

@@ -19,6 +19,7 @@ so nothing that ranks today changes address.
 | `/our-founders-journey/` | `our-founders-journey/index.html` |
 | `/products/` | `products/index.html` |
 | `/product/<slug>/` | `product/index.html` (one template for every product) |
+| `/checkout/` | `checkout/index.html` (Store API checkout, noindex) |
 | `/order-confirmed/` | `order-confirmed/index.html` (thank-you page after payment, noindex) |
 | `/contact-us/` | `contact-us/index.html` |
 | `/privacy-policy/` | `privacy-policy/index.html` |
@@ -54,6 +55,7 @@ assets/
     ga-contact.css   contact page and form
     ga-legal.css     policy pages (privacy, terms, refund, return, shipping) / 404
     ga-shop.css      header cart, cart drawer, product cards, product page
+    ga-checkout.css  checkout page
   js/
     ga-main.js       smooth scroll, nav, flyout, IG button, ticker, tabs, anchors
     ga-journey.js    scroll-scrubbed "Harvested / Blended" animation (home)
@@ -61,6 +63,7 @@ assets/
     ga-form.js       contact form counter + validation
     ga-shop-config.js  WordPress address (the one switch for going live)
     ga-shop.js       product data, cart, cart drawer, grid + product page
+    ga-checkout.js   checkout: syncs the cart to WooCommerce, address, delivery, payment
   data/
     products.json    mock catalogue in the WooCommerce Store API shape
   fonts/             woff2 / ttf font files
@@ -75,12 +78,13 @@ The client manages products in WordPress + WooCommerce; this site is the
 storefront. Checkout stays on WooCommerce's own checkout page.
 
 ```
-mykitchencorner.in  (this repo)          WordPress + WooCommerce
-  /products/  /product/<slug>/   <-- GET /wp-json/wc/store/v1/products
-  cart (localStorage) + drawer
-  "Checkout"  ---->  /wp-admin/admin-post.php?action=kc_cart&items=101:2,104:1
-                                           mu-plugin fills the cart
-                                           -> WooCommerce checkout + payment
+mykitchencorner.in  (this repo)              store.mykitchencorner.in (WordPress)
+  /products/  /product/<slug>/   <--  GET  /wp-json/wc/store/v1/products
+  cart drawer (localStorage)
+  /checkout/  ---------------------->  Store API cart + checkout (Cart-Token)
+     "Pay" --> order-pay page ------>  PhonePe hosted payment page
+  /order-confirmed/  <---------------  order received (paid)
+  /checkout/?payment=failed  <-------  cancelled / failed
 ```
 
 - **Mock mode (now).** `wpBase` in `assets/js/ga-shop-config.js` is empty, so
@@ -95,6 +99,20 @@ mykitchencorner.in  (this repo)          WordPress + WooCommerce
   3. Set `wpBase` in `ga-shop-config.js` to the WordPress URL, then bump
      `?v=1` on the `ga-shop-config.js` / `ga-shop.js` tags in every page
      (static assets are cached for a year).
+- **Checkout security.**
+  - The WooCommerce cart is identified by a signed **Cart-Token** (JWT, 48 h),
+    kept in localStorage. Requests send no cookies (`credentials: "omit"`), so
+    there is nothing for cross-site request forgery to use.
+  - Prices, delivery charges and totals are always computed by WooCommerce;
+    the page only displays them.
+  - All store text is HTML-escaped before display. After "Place order" the
+    browser follows only https URLs on the store or `*.phonepe.com`.
+  - Personal details are kept in sessionStorage (this tab only) so a failed
+    payment can be retried; they are cleared on the thank-you page.
+  - The store rate-limits placing orders (10 a minute per visitor) and only
+    answers browser API calls from mykitchencorner.in.
+  - `.htaccess` sends a strict Content-Security-Policy (own scripts and
+    styles only, no inline code; data only from the store) and HSTS.
 - **Cart.** Stored in the visitor's browser and synced across tabs. Every
   time products load, names, prices and stock are refreshed from the store.
   WooCommerce recalculates the real totals at checkout, so the storefront

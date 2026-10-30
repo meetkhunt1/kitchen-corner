@@ -95,6 +95,17 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # Browsers only ever reach this site over HTTPS.
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Content Security Policy for pages: only this site's own scripts and
+  # styles run (no inline code anywhere), and the store is the only other
+  # place data is loaded from or sent to. Payments open on the store or
+  # PhonePe by normal navigation, which this policy does not restrict.
+  <FilesMatch "\.html$">
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https://store.mykitchencorner.in; font-src 'self'; media-src 'self'; connect-src 'self' https://store.mykitchencorner.in; frame-src 'none'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  </FilesMatch>
 </IfModule>
 
 # -------------------------------------------------------------------- mime types
