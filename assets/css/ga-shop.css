@@ -945,3 +945,15 @@ body.ga-cart-open .ga-cart {
     font-size: 13px;
   }
 }
+
+/* long product descriptions (How to use / Ingredients / Storage / Allergy) */
+.ga-pdp-desc h3 {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ga-ink);
+}
+.ga-pdp-desc p + h3,
+.ga-pdp-desc ul + h3 {
+  margin-top: 10px;
+}
