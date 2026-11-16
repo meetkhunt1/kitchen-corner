@@ -11,7 +11,7 @@ window.GA_SHOP_CONFIG = {
   // true: full shop (prices, cart, checkout). false: product catalogue only -
   // no prices, cart or checkout, product pages say online ordering is coming
   // soon. Flip to true when the store is ready to take orders.
-  ordering: false,
+  ordering: true,
 
   // Size a product opens on when it comes in several sizes (must match the
   // size name in WooCommerce). Falls back to the first size in stock.

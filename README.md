@@ -87,7 +87,7 @@ mykitchencorner.in  (this repo)              store.mykitchencorner.in (WordPress
   /checkout/?payment=failed  <-------  cancelled / failed
 ```
 
-- **Catalogue mode (live now).** `ordering: false` in
+- **Catalogue mode.** `ordering: false` in
   `assets/js/ga-shop-config.js` shows products, photos and sizes only: no
   prices, cart icon, cart drawer or checkout (`/checkout/` sends visitors to
   `/products/`), and product pages say online ordering is coming soon with a
