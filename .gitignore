@@ -19,3 +19,6 @@ $RECYCLE.BIN/
 node_modules/
 .cache/
 *.log
+
+# Business documents (contracts, bank details) - never commit or publish
+*.pdf
