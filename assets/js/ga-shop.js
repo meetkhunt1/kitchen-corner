@@ -112,6 +112,20 @@
     for (var i = 0; i < pool.length; i++) if (pool[i].kcLabel.toLowerCase() === pref) return pool[i];
     return pool[0];
   }
+  // Photo for a size: its own image when one is set on the variation in
+  // WooCommerce (a variation without one reports the parent's first image),
+  // else the gallery photo CONFIG.sizePhotos assigns to its label, else the
+  // product's first photo.
+  function imageFor(u) {
+    if (!u) return null;
+    var parent = u.kcParent || u;
+    var gallery = parent.images || [];
+    var own = u.images && u.images[0];
+    if (own && u !== parent && (!gallery[0] || own.id !== gallery[0].id)) return own;
+    var map = CONFIG.sizePhotos || {};
+    var n = map[String(u.kcLabel || "").toLowerCase()];
+    return (n && gallery[n - 1]) || gallery[0] || own || null;
+  }
   function inStock(p) {
     var vs = variantsOf(p);
     return vs ? vs.some(buyable) : !!p.is_in_stock;
@@ -285,7 +299,7 @@
     // p is a simple product or a variation (one size of its kcParent).
     function snapshot(p, item) {
       var parent = p.kcParent || p;
-      var img = (p.images && p.images[0]) || (parent.images && parent.images[0]) || {};
+      var img = imageFor(p) || {};
       item.id = p.id;
       item.slug = parent.slug;
       item.name = text(parent.name);
@@ -622,10 +636,10 @@
   }
 
   function cardHTML(p, i) {
-    var img = (p.images && p.images[0]) || {};
     var url = productUrl(p);
     var vs = variantsOf(p);
     var sel = vs ? defaultVariant(p) : p; // what "Add to cart" adds
+    var img = (ORDERING && imageFor(sel)) || (p.images && p.images[0]) || {};
     var stocked = inStock(p);
     var st = addState(sel, stocked);
     var cls = "ga-pcard" + (stocked ? "" : " ga-is-oos");
@@ -687,7 +701,17 @@
       btn.disabled = !st[0];
       btn.textContent = st[1];
       card.querySelector(".ga-pcard-price").innerHTML = priceHTML(v);
+      setImg(card.querySelector(".ga-pcard-media img"), imageFor(v), v.kcParent);
     });
+  }
+
+  // Point an <img> at a Store API image object.
+  function setImg(el, img, p) {
+    if (!el || !img || !img.src) return;
+    el.src = img.src;
+    if (img.srcset) el.srcset = img.srcset;
+    else el.removeAttribute("srcset");
+    el.alt = text(img.alt || (p && p.name) || "");
   }
 
   function skeletonHTML(n) {
@@ -823,15 +847,17 @@
     var stocked = inStock(p);
     var st = addState(sel, stocked);
     var cat = p.categories && p.categories[0];
+    var first = (ORDERING && imageFor(sel)) || imgs[0]; // photo of the selected size
+    var active = imgs.indexOf(first);
 
     var gallery =
       '<div class="ga-pdp-gallery">' +
         '<div class="ga-pdp-main">' +
           (ORDERING && sel && sel.on_sale && stocked ? '<span class="ga-badge">Sale</span>' : "") +
-          (imgs[0].src
-            ? '<img src="' + esc(imgs[0].src) + '"' +
-              (imgs[0].srcset ? ' srcset="' + esc(imgs[0].srcset) + '" sizes="(max-width: 767px) 100vw, 50vw"' : "") +
-              ' alt="' + esc(imgs[0].alt || p.name) + '" width="683" height="1024" fetchpriority="high" decoding="async">'
+          (first.src
+            ? '<img src="' + esc(first.src) + '"' +
+              (first.srcset ? ' srcset="' + esc(first.srcset) + '" sizes="(max-width: 767px) 100vw, 50vw"' : "") +
+              ' alt="' + esc(first.alt || p.name) + '" width="683" height="1024" fetchpriority="high" decoding="async">'
             : placeholderHTML()) +
         "</div>" +
         (imgs.length > 1
@@ -839,8 +865,8 @@
             imgs
               .map(function (img, n) {
                 return (
-                  '<button type="button" role="listitem" class="ga-pdp-thumb' + (n === 0 ? " ga-is-active" : "") +
-                  '" data-ga-thumb="' + n + '" aria-label="Show image ' + (n + 1) + '"' + (n === 0 ? ' aria-current="true"' : "") + ">" +
+                  '<button type="button" role="listitem" class="ga-pdp-thumb' + (n === active ? " ga-is-active" : "") +
+                  '" data-ga-thumb="' + n + '" aria-label="Show image ' + (n + 1) + '"' + (n === active ? ' aria-current="true"' : "") + ">" +
                     '<img src="' + esc(img.thumbnail || img.src) + '" alt="" width="200" height="300" loading="lazy" decoding="async">' +
                   "</button>"
                 );
@@ -931,19 +957,7 @@
     var main = root.querySelector(".ga-pdp-main img");
     root.addEventListener("click", function (e) {
       var th = e.target.closest("[data-ga-thumb]");
-      if (th && main) {
-        var img = p.images[Number(th.getAttribute("data-ga-thumb"))];
-        main.src = img.src;
-        if (img.srcset) main.srcset = img.srcset;
-        else main.removeAttribute("srcset");
-        main.alt = text(img.alt || p.name);
-        Array.prototype.forEach.call(root.querySelectorAll("[data-ga-thumb]"), function (b) {
-          var on = b === th;
-          b.classList.toggle("ga-is-active", on);
-          if (on) b.setAttribute("aria-current", "true");
-          else b.removeAttribute("aria-current");
-        });
-      }
+      if (th) showImage(p.images[Number(th.getAttribute("data-ga-thumb"))]);
       var step = e.target.closest("[data-ga-pdp-step]");
       if (step) {
         var input = root.querySelector("#ga-pdp-qty");
@@ -970,6 +984,19 @@
       });
     }
 
+    // Show a photo in the main frame and mark its thumbnail (if it has one).
+    function showImage(img) {
+      if (!main || !img) return;
+      setImg(main, img, p);
+      var n = (p.images || []).indexOf(img);
+      Array.prototype.forEach.call(root.querySelectorAll("[data-ga-thumb]"), function (b) {
+        var on = Number(b.getAttribute("data-ga-thumb")) === n;
+        b.classList.toggle("ga-is-active", on);
+        if (on) b.setAttribute("aria-current", "true");
+        else b.removeAttribute("aria-current");
+      });
+    }
+
     // The product or size the Add button currently adds.
     function current() {
       var btn = root.querySelector(".ga-pdp-add");
@@ -991,6 +1018,7 @@
       add.textContent = st[1];
       root.querySelector(".ga-pdp-price").innerHTML = priceHTML(v);
       root.querySelector(".ga-pdp-stock").innerHTML = stockHTML(v, inStock(p));
+      showImage(imageFor(v));
       var pack = root.querySelector(".ga-pdp-pack");
       pack.hidden = !v.kcPack;
       pack.querySelector("span").textContent = v.kcPack || "";

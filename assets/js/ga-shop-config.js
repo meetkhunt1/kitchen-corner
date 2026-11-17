@@ -17,6 +17,12 @@ window.GA_SHOP_CONFIG = {
   // size name in WooCommerce). Falls back to the first size in stock.
   preferredSize: "500 g",
 
+  // Which product photo (1 = first) to show for each size when the size has
+  // no image of its own in WooCommerce. Our studio photos are in the order
+  // 500 g, 1 kg, 300 g, ingredients label. Sizes not listed show photo 1.
+  // A size image set in WooCommerce (Variations -> image) always wins.
+  sizePhotos: { "500 g": 1, "1 kg": 2 },
+
   // Mock catalogue in the WooCommerce Store API response shape.
   mockUrl: "/assets/data/products.json"
 };
